@@ -33,7 +33,7 @@ namespace Bytewizer.TinyCLR.Boards
                 throw new ArgumentNullException();
             }
 
-            var networkSettings = new NetworkSettings()
+            var networkSettings = new EthernetSettings()
             {
                 EnablePin = enablePin,
                 Controller = networkController,
@@ -43,7 +43,7 @@ namespace Bytewizer.TinyCLR.Boards
 
             services.Replace(
                 new ServiceDescriptor(
-                    typeof(IWirelessSettings),
+                    typeof(WirelessSettings),
                     networkSettings)
                 );
 
@@ -93,7 +93,7 @@ namespace Bytewizer.TinyCLR.Boards
 
         public bool WirelessLinked { get; private set; }
 
-        public WirelessService(ILoggerFactory loggerFactory, IConfiguration configuration, IWirelessSettings settings)
+        public WirelessService(ILoggerFactory loggerFactory, IConfiguration configuration, WirelessSettings settings)
         {
             _logger = loggerFactory.CreateLogger(nameof(WirelessService));
             _configuration = configuration;
@@ -167,7 +167,7 @@ namespace Bytewizer.TinyCLR.Boards
             else
             {
                 WirelessLinked = false;
-                _configuration[BoardSettings.WirelessConnected] = false;
+                _configuration[BoardSettings.NetworkConnected] = false;
                 _logger.Log(LogLevel.Information, "802.11 wireless interface disconnected.");
             }
         }
@@ -188,7 +188,7 @@ namespace Bytewizer.TinyCLR.Boards
 
             if (address[0] != 0)
             {
-                _configuration[BoardSettings.WirelessConnected] = true;
+                _configuration[BoardSettings.NetworkConnected] = true;
             }
         }
     }

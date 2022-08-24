@@ -54,14 +54,20 @@
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\Hardware\DiagnosticsServiceCollectionExtension.cs">
       <Link>Hardware\Shared\DiagnosticsServiceCollectionExtension.cs</Link>
     </Compile>
-    <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\Hardware\DisplayServiceCollectionExtension.cs">
-      <Link>Hardware\Shared\DisplayServiceCollectionExtension.cs</Link>
+    <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\Hardware\EthernetServiceCollectionExtension.cs">
+      <Link>Hardware\Shared\EthernetServiceCollectionExtension.cs</Link>
     </Compile>
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\Hardware\NetworkTimeServiceCollectionExtension.cs">
       <Link>Hardware\Shared\NetworkTimeServiceCollectionExtension.cs</Link>
     </Compile>
+    <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\Hardware\TouchDisplayServiceCollectionExtension.cs">
+      <Link>Hardware\Shared\TouchDisplayServiceCollectionExtension.cs</Link>
+    </Compile>
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\Hardware\WirelessServiceCollectionExtension.cs">
       <Link>Hardware\Shared\WirelessServiceCollectionExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\MikroBus.cs">
+      <Link>Hardware\MikroBus.cs</Link>
     </Compile>
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\NetworkHelper.cs">
       <Link>NetworkHelper.cs</Link>
@@ -72,10 +78,9 @@
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\TouchScreenSettings.cs">
       <Link>TouchScreenSettings.cs</Link>
     </Compile>
-    <Compile Include="Hardware\DefaultEthernetServiceCollectionExtension.cs" />
-    <Compile Include="Hardware\DefaultDisplayServiceCollectionExtension.cs" />
-    <Compile Include="Hardware\DefaultWirelessServiceCollectionExtension.cs" />
-    <Compile Include="Hardware\EthernetServiceCollectionExtension.cs" />
+    <Compile Include="Hardware\BuiltInEthernetServiceCollectionExtension.cs" />
+    <Compile Include="Hardware\MikroBusWirelessServiceCollectionExtension.cs" />
+    <Compile Include="Hardware\IntegratedTouchDisplayServiceCollectionExtension.cs" />
     <Compile Include="Hosting\HostBoard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\NetworkStatusService.cs" />

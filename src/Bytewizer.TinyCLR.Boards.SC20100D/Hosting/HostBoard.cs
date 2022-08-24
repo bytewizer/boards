@@ -21,12 +21,10 @@ namespace Bytewizer.TinyCLR.Boards
             var host = Host.CreateBuilder()
                 .ConfigureServices((context, services) =>
                 {
-                    context.Configuration[BoardSettings.BoardType] = typeof(FEZPortal);
+                    context.Configuration[BoardSettings.BoardType] = typeof(SC20100);
                     context.Configuration[BoardSettings.NetworkConnected] = false;
 
-                    services.AddClock(
-                        (int)context.Configuration.GetOrDefault("timezone:offset", 0)
-                    );
+                    services.AddClock();
                     services.AddLogging(builder =>
                     {
                         builder.AddDebug();

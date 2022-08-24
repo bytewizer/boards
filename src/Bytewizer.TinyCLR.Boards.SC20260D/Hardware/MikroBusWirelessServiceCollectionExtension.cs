@@ -7,11 +7,16 @@ using GHIElectronics.TinyCLR.Devices.Gpio;
 using GHIElectronics.TinyCLR.Devices.Spi;
 using GHIElectronics.TinyCLR.Devices.Network;
 
-namespace Bytewizer.TinyCLR.Boards.SC20260D
+namespace Bytewizer.TinyCLR.Boards
 {
-    public static class DefaultWirelessServiceCollectionExtension 
+    public static class MikroBusWirelessServiceCollectionExtension
     {
         public static IServiceCollection AddWireless(this IServiceCollection services, string ssid, string psk)
+        {
+            return AddWireless(services, ssid, psk, WiFiMode.AccessPoint, MikroBus.One);
+        }
+
+        public static IServiceCollection AddWireless(this IServiceCollection services, string ssid, string psk, WiFiMode mode, MikroBus slot)
         {
             if (services == null)
             {
@@ -28,25 +33,46 @@ namespace Bytewizer.TinyCLR.Boards.SC20260D
                 throw new ArgumentNullException();
             }
 
+            int interruptPin;
+            int resetPin;
+            int chipSelectLine;
+            int enablePin;
+
+            if (slot == MikroBus.One)
+            {
+                interruptPin = SC20260.GpioPin.PG6;
+                resetPin = SC20260.GpioPin.PI8;
+                chipSelectLine = SC20260.GpioPin.PG12;
+                enablePin = SC20260.GpioPin.PI0;
+            }
+            else
+            {
+                interruptPin = SC20260.GpioPin.PJ13;
+                resetPin = SC20260.GpioPin.PI11;
+                chipSelectLine = SC20260.GpioPin.PC13;
+                enablePin = SC20260.GpioPin.PI5;
+            }
+
             services.AddWireless(
-                SC20100.NetworkController.ATWinc15x0,
+                SC20260.NetworkController.ATWinc15x0,
                 new WiFiNetworkInterfaceSettings()
                 {
                     Ssid = ssid,
-                    Password = psk
+                    Password = psk,
+                    Mode = mode
                 },
                 new SpiNetworkCommunicationInterfaceSettings()
                 {
-                    SpiApiName = FEZFeather.SpiBus.WiFi,
-                    GpioApiName = SC20100.GpioPin.Id,
-                    InterruptPin = GpioController.GetDefault().OpenPin(FEZFeather.GpioPin.WiFiInterrupt),
+                    SpiApiName = SC20260.SpiBus.Spi3,
+                    GpioApiName = SC20260.GpioPin.Id,
+                    InterruptPin = GpioController.GetDefault().OpenPin(interruptPin),
                     InterruptEdge = GpioPinEdge.FallingEdge,
                     InterruptDriveMode = GpioPinDriveMode.InputPullUp,
-                    ResetPin = GpioController.GetDefault().OpenPin(FEZFeather.GpioPin.WiFiReset),
+                    ResetPin = GpioController.GetDefault().OpenPin(resetPin),
                     ResetActiveState = GpioPinValue.Low,
                     SpiSettings = new SpiConnectionSettings()
                     {
-                        ChipSelectLine = GpioController.GetDefault().OpenPin(FEZFeather.GpioPin.WiFiChipselect),
+                        ChipSelectLine = GpioController.GetDefault().OpenPin(chipSelectLine),
                         ClockFrequency = 4000000,
                         Mode = SpiMode.Mode0,
                         ChipSelectType = SpiChipSelectType.Gpio,
@@ -54,9 +80,9 @@ namespace Bytewizer.TinyCLR.Boards.SC20260D
                         ChipSelectSetupTime = TimeSpan.FromTicks(10)
                     }
                 },
-                FEZFeather.GpioPin.WiFiEnable
+                enablePin
                 );
-           
+
             return services;
         }
     }

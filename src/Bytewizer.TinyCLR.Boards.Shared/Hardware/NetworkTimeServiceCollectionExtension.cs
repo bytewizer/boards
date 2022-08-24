@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Threading;
 
-using Bytewizer.TinyCLR.DependencyInjection;
-
 using Bytewizer.TinyCLR.Hosting;
 using Bytewizer.TinyCLR.Logging;
+using Bytewizer.TinyCLR.DependencyInjection;
 using Bytewizer.TinyCLR.Hosting.Configuration;
 
 namespace Bytewizer.TinyCLR.Boards
@@ -30,10 +29,6 @@ namespace Bytewizer.TinyCLR.Boards
         private readonly IConfiguration _configuration;
         private readonly ClockService _clock;
 
-        public NetworkTimeService(IConfiguration configuration, ClockService clock)
-             : this(NullLoggerFactory.Instance, configuration, clock)
-        { }
-
         public NetworkTimeService(ILoggerFactory loggerFactory, IConfiguration configuration, ClockService clock)
             : base(TimeSpan.FromSeconds(20), TimeSpan.FromDays(1))
         {
@@ -44,10 +39,9 @@ namespace Bytewizer.TinyCLR.Boards
 
         protected override void ExecuteAsync()
         {
-            var wifiConnected = (bool)_configuration.GetOrDefault(BoardSettings.WirelessConnected, false);
-            var ethernetConnected = (bool)_configuration.GetOrDefault(BoardSettings.EthernetConnected, false);
+            var connected = (bool)_configuration.GetOrDefault(BoardSettings.NetworkConnected, false);
 
-            if (wifiConnected || ethernetConnected)
+            if (connected)
             {
                 try
                 {
@@ -92,7 +86,7 @@ namespace Bytewizer.TinyCLR.Boards
 
             var milliseconds = (intPart * 1000) + ((fractPart * 1000) / 0x100000000L);
 
-            var networkDateTime = (new System.DateTime(1900, 1, 1)).
+            var networkDateTime = (new DateTime(1900, 1, 1)).
                 AddMilliseconds((long)milliseconds);
 
             return networkDateTime;

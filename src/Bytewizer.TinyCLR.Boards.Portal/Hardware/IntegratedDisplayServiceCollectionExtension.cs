@@ -12,7 +12,7 @@ using static GHIElectronics.TinyCLR.Drivers.FocalTech.FT5xx6.FT5xx6Controller;
 
 namespace Bytewizer.TinyCLR.Boards
 {
-    public static class DefaultDisplayServiceCollectionExtension
+    public static class IntegratedDisplayServiceCollectionExtension
     {
         public static IServiceCollection AddTouchScreen(this IServiceCollection services, DisplayOrientation orientation)
         {
@@ -72,10 +72,17 @@ namespace Bytewizer.TinyCLR.Boards
                 Orientation = touchOrientation
             };
 
+            var settings = new TouchScreenSettings()
+            {
+                DisplayController = displayController,
+                TouchController = touchController,
+                BacklighPin = FEZPortal.GpioPin.Backlight
+            };
+
             services.TryAdd(
                 new ServiceDescriptor(
                     typeof(TouchScreenSettings),
-                    new TouchScreenSettings(displayController, touchController, FEZPortal.GpioPin.Backlight)
+                    settings
                 ));
 
             services.TryAdd(

@@ -22,8 +22,7 @@ namespace Bytewizer.TinyCLR.Boards
 
         protected override void ExecuteAsync()
         {
-            var connected = (bool)_configuration[BoardSettings.WirelessConnected] ||
-                            (bool)_configuration[BoardSettings.EthernetConnected];
+            var connected = (bool)_configuration[BoardSettings.NetworkConnected];
 
             if (!connected)
             {

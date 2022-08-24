@@ -1,17 +1,9 @@
-﻿using System;
-using System.Net;
-using System.Text;
+﻿using System.Text;
 
 using GHIElectronics.TinyCLR.Devices.Network;
 
 namespace Bytewizer.TinyCLR.Boards
 {
-    public enum MikroeBus
-    {
-        Slot1,
-        Slot2
-    }
-
     internal class NetworkHelper 
     {
         internal static string GetNetworkInfo(NetworkController controller)
@@ -48,6 +40,7 @@ namespace Bytewizer.TinyCLR.Boards
         internal static string GetNetworkSettings(NetworkController controller)
         {
             var physicalAddress = GetPhysicalAddress(controller.GetInterfaceProperties().MacAddress);
+
             var dhcpEnabled = controller.ActiveInterfaceSettings.DhcpEnable ? "Yes" : "No";
             var dnsEnabled = controller.ActiveInterfaceSettings.DynamicDnsEnable ? "Yes" : "No";
             var multDnsEnabled = controller.ActiveInterfaceSettings.MulticastDnsEnable ? "Yes" : "No";
@@ -61,7 +54,6 @@ namespace Bytewizer.TinyCLR.Boards
 
             return sb.ToString();
         }
-
 
         private static string GetPhysicalAddress(byte[] bytes, char seperator = '-')
         {

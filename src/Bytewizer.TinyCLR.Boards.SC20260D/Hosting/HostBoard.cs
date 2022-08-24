@@ -22,8 +22,7 @@ namespace Bytewizer.TinyCLR.Boards
                 .ConfigureServices((context, services) =>
                 {
                     context.Configuration[BoardSettings.BoardType] = typeof(SC20260);
-                    context.Configuration[BoardSettings.WirelessConnected] = false;
-                    context.Configuration[BoardSettings.EthernetConnected] = false;
+                    context.Configuration[BoardSettings.NetworkConnected] = false;
 
                     services.AddClock();
                     services.AddLogging(builder =>

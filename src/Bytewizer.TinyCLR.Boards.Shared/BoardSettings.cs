@@ -15,12 +15,12 @@ namespace Bytewizer.TinyCLR.Hosting
         // internal use only
         public static readonly string BoardType = "_board:type_";
         public static readonly string DefaultController = "_default:controller_";
-        public static readonly string WirelessConnected = "_wireless:connected_";
-        public static readonly string EthernetConnected = "_ethernet:connected_";
-        
+        public static readonly string NetworkConnected = "_network:connected_";
+
         // public configuration settings
         public static readonly string TimeZoneOffset = "timezone:offset";
         public static readonly string WirelessSsid = "wireless:ssid";
         public static readonly string WirelessPsk = "wireless:psk";
+        public static readonly string EthernetMacAddress = "ethernet:macaddress";
     }
 }

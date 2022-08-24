@@ -16,7 +16,7 @@ namespace Bytewizer.TinyCLR.Boards
             : base(TimeSpan.FromSeconds(2))
         {
             _configuration = configuration;
-            _led = GpioController.GetDefault().OpenPin(FEZDuino.GpioPin.Led);
+            _led = GpioController.GetDefault().OpenPin(SC20100.GpioPin.PB0);
             _led.SetDriveMode(GpioPinDriveMode.Output);
         }
 

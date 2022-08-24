@@ -33,7 +33,7 @@ namespace Bytewizer.TinyCLR.Boards
                 throw new ArgumentNullException();
             }
 
-            var networkSettings = new NetworkSettings()
+            var networkSettings = new EthernetSettings()
             {
                 EnablePin = enablePin,
                 Controller = networkController,
@@ -43,7 +43,7 @@ namespace Bytewizer.TinyCLR.Boards
 
             services.Replace(
                 new ServiceDescriptor(
-                    typeof(IEthernetSettings),
+                    typeof(EthernetSettings),
                     networkSettings)
                 );
 
@@ -68,14 +68,10 @@ namespace Bytewizer.TinyCLR.Boards
 
         public bool EthernetLinked { get; private set; }
 
-        public EthernetService(IConfiguration configuration, IEthernetSettings settings)
-            : this(NullLoggerFactory.Instance, configuration, settings)
-        { }
-
         public EthernetService(
             ILoggerFactory loggerFactory,
             IConfiguration configuration,
-            IEthernetSettings settings)
+            EthernetSettings settings)
         {
             _logger = loggerFactory.CreateLogger(nameof(EthernetService));
             _configuration = configuration;
@@ -83,7 +79,13 @@ namespace Bytewizer.TinyCLR.Boards
             _enablePin = GpioController.GetDefault().OpenPin(settings.EnablePin);
             _enablePin.SetDriveMode(GpioPinDriveMode.Output);
             _enablePin.Write(GpioPinValue.Low);
-            
+
+            var macAddress = (byte[])_configuration[BoardSettings.EthernetMacAddress];
+            if (macAddress != null)
+            {
+                settings.InterfaceSettings.MacAddress = macAddress;
+            }
+
             Controller = NetworkController.FromName(settings.Controller);
             Controller.SetCommunicationInterfaceSettings(settings.CommunicationSettings);
             Controller.SetInterfaceSettings(settings.InterfaceSettings);
@@ -145,7 +147,7 @@ namespace Bytewizer.TinyCLR.Boards
             else
             {
                 EthernetLinked = false;
-                _configuration[BoardSettings.EthernetConnected] = false;
+                _configuration[BoardSettings.NetworkConnected] = false;
                 _logger.Log(LogLevel.Information, "Ethernet interface disconnected.");
             }
         }
@@ -166,7 +168,7 @@ namespace Bytewizer.TinyCLR.Boards
 
             if (address[0] != 0)
             {
-                _configuration[BoardSettings.EthernetConnected] = true;
+                _configuration[BoardSettings.NetworkConnected] = true;
             }
         }
     }

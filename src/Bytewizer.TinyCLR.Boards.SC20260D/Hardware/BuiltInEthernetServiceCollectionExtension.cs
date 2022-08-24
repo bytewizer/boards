@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections;
-using System.Text;
-using System.Threading;
 
-using Bytewizer.TinyCLR.Hosting;
 using Bytewizer.TinyCLR.DependencyInjection;
-using GHIElectronics.TinyCLR.Devices.Gpio;
-using GHIElectronics.TinyCLR.Devices.Network;
-using GHIElectronics.TinyCLR.Devices.Spi;
+
 using GHIElectronics.TinyCLR.Pins;
+using GHIElectronics.TinyCLR.Devices.Network;
 
 namespace Bytewizer.TinyCLR.Boards
 {
-    public static class DefaultEthernetServiceCollectionExtension 
+    public static class BuiltInEthernetServiceCollectionExtension 
     {
         public static IServiceCollection AddEthernet(this IServiceCollection services)
         {
@@ -28,14 +23,14 @@ namespace Bytewizer.TinyCLR.Boards
             }
 
             services.AddEthernet(
-                    SC20260.NetworkController.EthernetEmac,
-                    new EthernetNetworkInterfaceSettings()
-                    {
-                        MacAddress = macAddress
-                    },
-                    new BuiltInNetworkCommunicationInterfaceSettings(),
-                    SC20260.GpioPin.PG3
-                );
+                SC20260.NetworkController.EthernetEmac,
+                new EthernetNetworkInterfaceSettings()
+                {
+                    MacAddress = macAddress
+                },
+                new BuiltInNetworkCommunicationInterfaceSettings(),
+                SC20260.GpioPin.PG3
+            );
 
             return services;
         }

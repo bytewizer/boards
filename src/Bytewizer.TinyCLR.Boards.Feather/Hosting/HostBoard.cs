@@ -22,7 +22,7 @@ namespace Bytewizer.TinyCLR.Boards
                 .ConfigureServices((context, services) =>
                 {
                     context.Configuration[BoardSettings.BoardType] = typeof(FEZFeather);
-                    context.Configuration[BoardSettings.WirelessConnected] = false;
+                    context.Configuration[BoardSettings.NetworkConnected] = false;
 
                     services.AddClock();
                     services.AddLogging(builder =>
