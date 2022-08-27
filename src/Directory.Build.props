@@ -9,7 +9,7 @@
     <Authors>Microcompiler</Authors>
     <Company>Bytewizer Technology</Company>
     <PackageIcon>package-logo.png</PackageIcon>
-    <RepositoryUrl>https://github.com/bytewizer/runtime.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/bytewizer/boards.git</RepositoryUrl>
     <PackageId>$(AssemblyName)</PackageId>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
@@ -20,7 +20,7 @@
     <NoWarn>$(NoWarn);1591;5101;5128</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\..\..\LICENSE.md" Pack="true" PackagePath="$(PackageLicenseFile)" />
-    <None Include="..\..\..\images\package-logo.png" Pack="true" PackagePath="\" />
+    <None Include="..\..\LICENSE.md" Pack="true" PackagePath="$(PackageLicenseFile)" />
+    <None Include="..\..\images\package-logo.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 </Project>
