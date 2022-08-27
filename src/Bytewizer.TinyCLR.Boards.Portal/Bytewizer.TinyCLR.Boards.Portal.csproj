@@ -19,7 +19,7 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup>
-    <Description>Fez portal library built for TinyCLR IoT devices.</Description>
+    <Description>Fez Portal library built for TinyCLR IoT devices.</Description>
     <PackageTags>ghi tinyclr tinyclros sitcore iot boards</PackageTags>
     <AssemblyProduct>TinyCLR</AssemblyProduct>
   </PropertyGroup>
@@ -75,10 +75,10 @@
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\WirelessSettings.cs">
       <Link>Hardware\Shared\WirelessSettings.cs</Link>
     </Compile>
-    <Compile Include="C:\Repos\bytewizer\boards\src\Bytewizer.TinyCLR.Boards.Shared\Hardware\DiagnosticsServiceCollectionExtension.cs">
+    <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\Hardware\DiagnosticsServiceCollectionExtension.cs">
       <Link>Hardware\Shared\DiagnosticsServiceCollectionExtension.cs</Link>
     </Compile>
-    <Compile Include="C:\Repos\bytewizer\boards\src\Bytewizer.TinyCLR.Boards.Shared\NetworkSettings.cs">
+    <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\NetworkSettings.cs">
       <Link>Hardware\Shared\NetworkSettings.cs</Link>
     </Compile>
     <Compile Include="Hardware\IntegratedDisplayServiceCollectionExtension.cs" />
