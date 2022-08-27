@@ -46,39 +46,24 @@ jobs:
     - name: Setup nuget
       uses: nuget/setup-nuget@v1.0.5
 
-    - name: Setup nanoFramework
-      uses: nanoframework/nanobuild@v1
+    - name: Setup nuget sources
+      run: |
+        nuget sources add -name github.com -source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" -username ${{ github.actor }} -password ${{secrets.PACKAGE_API_KEY}}
+        nuget sources add -name nugettest.org -source "https://apiint.nugettest.org/v3/index.json" -username ${{ github.actor }} -password ${{secrets.NUGET_BUILD_API_KEY}}
 
     - name: Restore TinyCLR project
       working-directory: src
       run: >- 
-        nuget restore Bytewizer.TinyCLR.Runtime.sln -PackagesDirectory ./packages -verbosity ${env:VERBOSITY}
-
-    - name: Restore NanoCLR project
-      working-directory: src
-      run: >- 
-        nuget restore Bytewizer.NanoCLR.Runtime.sln -verbosity ${env:VERBOSITY} 
+        nuget restore Bytewizer.TinyCLR.Boards.sln -PackagesDirectory ./packages -verbosity ${env:VERBOSITY}
 
     - name: Build and pack TinyCLR libraries
       working-directory: src
       run: >- 
-        msbuild Bytewizer.TinyCLR.Runtime.sln -t:pack -verbosity:${env:VERBOSITY}
+        msbuild Bytewizer.TinyCLR.Boards.sln -t:pack -verbosity:${env:VERBOSITY}
         -p:PackageOutputPath=\builds\artifacts
         -p:BuildNumber="${{ steps.info.outputs.build }}"
         -p:Copyright="${{ steps.info.outputs.copyright }}"
-        -p:VersionPrefix="2.1.12"
-        -p:VersionSuffix=preview.${{ steps.info.outputs.build }}
-        -p:Configuration=${env:CONFIGURATION}
-        -p:ContinuousIntegrationBuild=true
-
-    - name: Build and pack NanoCLR libraries
-      working-directory: src
-      run: >- 
-        msbuild Bytewizer.NanoCLR.Runtime.sln -t:pack -verbosity:${env:VERBOSITY}
-        -p:PackageOutputPath=\builds\artifacts
-        -p:BuildNumber="${{ steps.info.outputs.build }}"
-        -p:Copyright="${{ steps.info.outputs.copyright }}"
-        -p:VersionPrefix="2.1.12"
+        -p:VersionPrefix="2.1.1"
         -p:VersionSuffix=preview.${{ steps.info.outputs.build }}
         -p:Configuration=${env:CONFIGURATION}
         -p:ContinuousIntegrationBuild=true
@@ -88,13 +73,3 @@ jobs:
       with:
         name: Build Packages ${{ steps.info.outputs.build }} 
         path: \builds\artifacts
-
-    - name: Publish package to github.com
-      run: |
-        nuget sources add -name github.com -source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" -username ${{ github.actor }} -password ${{secrets.PACKAGE_API_KEY}}
-        nuget push \builds\artifacts\**\*.nupkg -source github.com -apikey ${{secrets.PACKAGE_API_KEY}} -skipduplicate
-
-    - name: Publish package to test nuget.org
-      run: |
-        nuget sources add -name nugettest.org -source "https://apiint.nugettest.org/v3/index.json" -username ${{ github.actor }} -password ${{secrets.NUGET_BUILD_API_KEY}}
-        nuget push \builds\artifacts\**\*.nupkg -source nugettest.org -apikey ${{secrets.NUGET_BUILD_API_KEY}} -skipduplicate
