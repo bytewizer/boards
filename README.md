@@ -1,4 +1,4 @@
-# Runtime libraries for TinyCLR and nanoFramework
+# Board libraries for TinyCLR OS.
 
 [![NuGet Status](http://img.shields.io/nuget/v/Bytewizer.TinyCLR.Portal.svg?style=flat&logo=nuget)](https://www.nuget.org/packages?q=bytewizer.tinyclr.boards)
 [![Release](https://github.com/bytewizer/boards/actions/workflows/release.yml/badge.svg)](https://github.com/bytewizer/boards/actions/workflows/release.yml)
@@ -12,7 +12,7 @@ If you like or are using this project to start your solution, please give it a s
 
 ## Requirements
 
-Software: <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2019/2022</a> and <a href="https://www.ghielectronics.com/">GHI Electronics TinyCLR OS</a> or <a href="https://www.nanoFramework.net/">.NET nanoFramework OS</a>.  
+Software: <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2019/2022</a> and <a href="https://www.ghielectronics.com/">GHI Electronics TinyCLR OS</a>.  
 
 ## Nuget Packages
 

@@ -49,7 +49,6 @@ jobs:
     - name: Setup nuget sources
       run: |
         nuget sources add -name github.com -source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" -username ${{ github.actor }} -password ${{secrets.PACKAGE_API_KEY}}
-        nuget sources add -name nugettest.org -source "https://apiint.nugettest.org/v3/index.json" -username ${{ github.actor }} -password ${{secrets.NUGET_BUILD_API_KEY}}
 
     - name: Restore TinyCLR project
       working-directory: src
@@ -73,3 +72,7 @@ jobs:
       with:
         name: Build Packages ${{ steps.info.outputs.build }} 
         path: \builds\artifacts
+
+    - name: Publish package to github.com
+      run: |
+        nuget push \builds\artifacts\**\*.nupkg -source github.com -apikey ${{secrets.PACKAGE_API_KEY}} -skipduplicate
