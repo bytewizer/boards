@@ -76,7 +76,7 @@ namespace Bytewizer.TinyCLR.Boards
             {
                 DisplayController = displayController,
                 TouchController = touchController,
-                BacklighPin = FEZPortal.GpioPin.Backlight
+                BacklightPin = FEZPortal.GpioPin.Backlight
             };
 
             services.TryAdd(

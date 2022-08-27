@@ -1,7 +1,4 @@
-﻿using System;
-
-using Bytewizer.TinyCLR.Hosting;
-using Bytewizer.TinyCLR.DependencyInjection;
+﻿using Bytewizer.TinyCLR.DependencyInjection;
 
 using GHIElectronics.TinyCLR.Pins;
 using GHIElectronics.TinyCLR.Devices.Gpio;
@@ -11,6 +8,7 @@ using GHIElectronics.TinyCLR.Drivers.FocalTech.FT5xx6;
 using GHIElectronics.TinyCLR.Devices.Display;
 
 using static GHIElectronics.TinyCLR.Drivers.FocalTech.FT5xx6.FT5xx6Controller;
+using System;
 
 namespace Bytewizer.TinyCLR.Boards
 {
@@ -18,6 +16,11 @@ namespace Bytewizer.TinyCLR.Boards
     {
         public static IServiceCollection AddTouchScreen(this IServiceCollection services, DisplayOrientation orientation)
         {
+            if (services == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             TouchOrientation touchOrientation = TouchOrientation.Degrees0;
 
             switch (orientation)
@@ -74,27 +77,7 @@ namespace Bytewizer.TinyCLR.Boards
                 Orientation = touchOrientation
             };
 
-            var settings = new TouchScreenSettings()
-            {
-                DisplayController = displayController,
-                TouchController = touchController,
-                BacklighPin = SC20260.GpioPin.PA15
-            };
-
-            services.TryAdd(
-                new ServiceDescriptor(
-                    typeof(TouchScreenSettings),
-                    settings
-                ));
-
-            services.TryAdd(
-                new ServiceDescriptor(
-                    typeof(TouchScreenService),
-                    typeof(TouchScreenService),
-                    ServiceLifetime.Singleton
-                ));
-
-            return services;
+            return services.AddTouchScreen(displayController, touchController, SC20260.GpioPin.PA15);
         }
     }
 }

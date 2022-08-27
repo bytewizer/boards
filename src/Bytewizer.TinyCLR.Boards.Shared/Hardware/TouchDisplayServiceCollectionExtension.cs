@@ -13,11 +13,70 @@ namespace Bytewizer.TinyCLR.Boards
     {
         public static IServiceCollection AddTouchScreen(this IServiceCollection services)
         {
+            if (services == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             return services.AddTouchScreen(DisplayOrientation.Degrees0);
+        }
+
+        public static IServiceCollection AddTouchScreen(
+            this IServiceCollection services, 
+            DisplayController displayController, 
+            FT5xx6Controller tocuhController,
+            int backlightPin)
+        {
+            if (services == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            if (displayController == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            if (tocuhController == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            var settings = new TouchScreenSettings()
+            {
+                DisplayController = displayController,
+                TouchController = tocuhController,
+                BacklightPin = backlightPin
+            };
+
+            services.TryAdd(
+                new ServiceDescriptor(
+                    typeof(TouchScreenSettings),
+                    settings
+                ));
+
+            services.TryAdd(
+                new ServiceDescriptor(
+                    typeof(ITouchScreenService),
+                    typeof(TouchScreenService),
+                    ServiceLifetime.Singleton
+                ));
+
+            return services;
         }
     }
 
-    public class TouchScreenService : IDisposable
+    public interface ITouchScreenService : IDisposable
+    {
+        FT5xx6Controller TouchController { get; }
+        DisplayController DisplayController { get; }
+        int Width { get; }
+        int Height { get; }
+        void Enable();
+        void Disable();
+    }
+
+    public class TouchScreenService : ITouchScreenService
     {
         private readonly GpioPin _backlightPin;
 
@@ -28,14 +87,12 @@ namespace Bytewizer.TinyCLR.Boards
 
         public TouchScreenService(TouchScreenSettings settings)
         {
-            DisplayController = settings.DisplayController;
-            TouchController = settings.TouchController;
-
-            _backlightPin = GpioController.GetDefault().OpenPin(settings.BacklighPin);
+            _backlightPin = GpioController.GetDefault().OpenPin(settings.BacklightPin);
             _backlightPin.SetDriveMode(GpioPinDriveMode.Output);
             _backlightPin.Write(GpioPinValue.Low);
 
-            Enable();
+            DisplayController = settings.DisplayController;
+            TouchController = settings.TouchController;
         }
 
         public void Enable()

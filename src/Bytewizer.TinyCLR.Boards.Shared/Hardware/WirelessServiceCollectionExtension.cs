@@ -33,7 +33,7 @@ namespace Bytewizer.TinyCLR.Boards
                 throw new ArgumentNullException();
             }
 
-            var networkSettings = new EthernetSettings()
+            var networkSettings = new WirelessSettings()
             {
                 EnablePin = enablePin,
                 Controller = networkController,
@@ -49,7 +49,7 @@ namespace Bytewizer.TinyCLR.Boards
 
             services.TryAdd(
                 new ServiceDescriptor(
-                    typeof(WirelessService),
+                    typeof(IWirelessService),
                     typeof(WirelessService), 
                     ServiceLifetime.Singleton)
                 );
@@ -62,10 +62,9 @@ namespace Bytewizer.TinyCLR.Boards
 
     public class WirelessWatchdog : SchedulerService
     {
-        private readonly WirelessService _network;
+        private readonly IWirelessService _network;
 
-        public WirelessWatchdog(WirelessService network)
-            
+        public WirelessWatchdog(IWirelessService network)       
             : base(TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(30))
         {
             _network = network;
@@ -73,7 +72,7 @@ namespace Bytewizer.TinyCLR.Boards
 
         protected override void ExecuteAsync()
         {
-            if (_network.WirelessLinked)
+            if (_network.LinkConnected)
             {
                 return;
             }
@@ -83,7 +82,7 @@ namespace Bytewizer.TinyCLR.Boards
         }
     }
 
-    public class WirelessService : IDisposable
+    public class WirelessService : IWirelessService
     {
         private readonly ILogger _logger;
         private readonly GpioPin _enablePin;
@@ -91,7 +90,7 @@ namespace Bytewizer.TinyCLR.Boards
 
         public NetworkController Controller { get; private set; }
 
-        public bool WirelessLinked { get; private set; }
+        public bool LinkConnected { get => Controller.GetLinkConnected(); }
 
         public WirelessService(ILoggerFactory loggerFactory, IConfiguration configuration, WirelessSettings settings)
         {
@@ -161,12 +160,10 @@ namespace Bytewizer.TinyCLR.Boards
         {
             if (args.Connected)
             {
-                WirelessLinked = true;
                 _logger.Log(LogLevel.Information, "802.11 wireless interface connected.");
             }
             else
             {
-                WirelessLinked = false;
                 _configuration[BoardSettings.NetworkConnected] = false;
                 _logger.Log(LogLevel.Information, "802.11 wireless interface disconnected.");
             }

@@ -7,8 +7,8 @@
     <ProjectGuid>{547D7917-49D1-4E76-BFF4-23221BAD7072}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bytewizer.TinyCLR.Boards.SC20260D</RootNamespace>
-    <AssemblyName>Bytewizer.TinyCLR.Boards.SC20260D</AssemblyName>
+    <RootNamespace>Bytewizer.TinyCLR.Boards.SC20260</RootNamespace>
+    <AssemblyName>Bytewizer.TinyCLR.Boards.SC20260</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A1948822-69DD-4150-919B-F3F42EFB71CC};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -48,6 +48,9 @@
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\BoardSettings.cs">
       <Link>BoardSettings.cs</Link>
     </Compile>
+    <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\EthernetSettings.cs">
+      <Link>Hardware\Shared\EthernetSettings.cs</Link>
+    </Compile>
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\Hardware\ClockServiceCollectionExtension.cs">
       <Link>Hardware\Shared\ClockServiceCollectionExtension.cs</Link>
     </Compile>
@@ -66,17 +69,29 @@
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\Hardware\WirelessServiceCollectionExtension.cs">
       <Link>Hardware\Shared\WirelessServiceCollectionExtension.cs</Link>
     </Compile>
+    <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\IEthernetService.cs">
+      <Link>Hardware\Shared\IEthernetService.cs</Link>
+    </Compile>
+    <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\INetworkService.cs">
+      <Link>Hardware\Shared\INetworkService.cs</Link>
+    </Compile>
+    <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\IWirelessService.cs">
+      <Link>Hardware\Shared\IWirelessService.cs</Link>
+    </Compile>
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\MikroBus.cs">
-      <Link>Hardware\MikroBus.cs</Link>
+      <Link>Hardware\Shared\MikroBus.cs</Link>
     </Compile>
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\NetworkHelper.cs">
-      <Link>NetworkHelper.cs</Link>
+      <Link>Hardware\Shared\NetworkHelper.cs</Link>
     </Compile>
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\NetworkSettings.cs">
-      <Link>NetworkSettings.cs</Link>
+      <Link>Hardware\Shared\NetworkSettings.cs</Link>
     </Compile>
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\TouchScreenSettings.cs">
-      <Link>TouchScreenSettings.cs</Link>
+      <Link>Hardware\Shared\TouchScreenSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\WirelessSettings.cs">
+      <Link>Hardware\Shared\WirelessSettings.cs</Link>
     </Compile>
     <Compile Include="Hardware\BuiltInEthernetServiceCollectionExtension.cs" />
     <Compile Include="Hardware\MikroBusWirelessServiceCollectionExtension.cs" />
@@ -86,6 +101,30 @@
     <Compile Include="Services\NetworkStatusService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Bytewizer.TinyCLR.Core">
+      <Version>2.1.12</Version>
+    </PackageReference>
+    <PackageReference Include="Bytewizer.TinyCLR.DependencyInjection">
+      <Version>2.1.12</Version>
+    </PackageReference>
+    <PackageReference Include="Bytewizer.TinyCLR.DependencyInjection.Abstractions">
+      <Version>2.1.12</Version>
+    </PackageReference>
+    <PackageReference Include="Bytewizer.TinyCLR.Hosting">
+      <Version>2.1.12</Version>
+    </PackageReference>
+    <PackageReference Include="Bytewizer.TinyCLR.Hosting.Configuration">
+      <Version>2.1.12</Version>
+    </PackageReference>
+    <PackageReference Include="Bytewizer.TinyCLR.Logging">
+      <Version>2.1.12</Version>
+    </PackageReference>
+    <PackageReference Include="Bytewizer.TinyCLR.Logging.Abstractions">
+      <Version>2.1.12</Version>
+    </PackageReference>
+    <PackageReference Include="Bytewizer.TinyCLR.Logging.Debug">
+      <Version>2.1.12</Version>
+    </PackageReference>
     <PackageReference Include="GHIElectronics.TinyCLR.Core">
       <Version>2.2.0.4200</Version>
     </PackageReference>
@@ -98,9 +137,6 @@
     <PackageReference Include="GHIElectronics.TinyCLR.Devices.Rtc">
       <Version>2.2.0.4200</Version>
     </PackageReference>
-    <PackageReference Include="GHIElectronics.TinyCLR.Devices.Storage">
-      <Version>2.2.0.4200</Version>
-    </PackageReference>
     <PackageReference Include="GHIElectronics.TinyCLR.Drivers.FocalTech.FT5xx6">
       <Version>2.2.0.4200</Version>
     </PackageReference>
@@ -108,44 +144,10 @@
       <Version>2.2.0.4200</Version>
     </PackageReference>
     <PackageReference Include="NuGet.Build.Tasks.Pack">
-      <Version>6.2.1</Version>
+      <Version>6.3.0</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\runtime\src\core\Bytewizer.TinyCLR.Core\Bytewizer.TinyCLR.Core.csproj">
-      <Project>{70392D1D-6B78-46C8-9531-C02915742A46}</Project>
-      <Name>Bytewizer.TinyCLR.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\runtime\src\di\Bytewizer.TinyCLR.DependencyInjection.Abstractions\Bytewizer.TinyCLR.DependencyInjection.Abstractions.csproj">
-      <Project>{F5997E37-7348-4FA6-9103-990D9906DA4F}</Project>
-      <Name>Bytewizer.TinyCLR.DependencyInjection.Abstractions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\runtime\src\di\Bytewizer.TinyCLR.DependencyInjection\Bytewizer.TinyCLR.DependencyInjection.csproj">
-      <Project>{AEB62F01-BA5F-45E3-A82C-4D2E058046A3}</Project>
-      <Name>Bytewizer.TinyCLR.DependencyInjection</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\runtime\src\hosting\Bytewizer.TinyCLR.Hosting.Configuration\Bytewizer.TinyCLR.Hosting.Configuration.csproj">
-      <Project>{71492D2D-6B78-46C8-9531-C02915742A46}</Project>
-      <Name>Bytewizer.TinyCLR.Hosting.Configuration</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\runtime\src\hosting\Bytewizer.TinyCLR.Hosting\Bytewizer.TinyCLR.Hosting.csproj">
-      <Project>{70492D2D-6B78-46C8-9531-C02915742A46}</Project>
-      <Name>Bytewizer.TinyCLR.Hosting</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\runtime\src\logging\Bytewizer.TinyCLR.Logging.Abstractions\Bytewizer.TinyCLR.Logging.Abstractions.csproj">
-      <Project>{598D7917-49D1-4E76-BFF4-23221BAD7072}</Project>
-      <Name>Bytewizer.TinyCLR.Logging.Abstractions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\runtime\src\logging\Bytewizer.TinyCLR.Logging.Debug\Bytewizer.TinyCLR.Logging.Debug.csproj">
-      <Project>{BE75C9F4-A4E1-4083-881D-AF55266EC7A7}</Project>
-      <Name>Bytewizer.TinyCLR.Logging.Debug</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\runtime\src\logging\Bytewizer.TinyCLR.Logging\Bytewizer.TinyCLR.Logging.csproj">
-      <Project>{D6D13310-C4A1-4409-B0E3-10F29F7FF262}</Project>
-      <Name>Bytewizer.TinyCLR.Logging</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

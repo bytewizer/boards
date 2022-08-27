@@ -13,7 +13,7 @@ namespace Bytewizer.TinyCLR.Boards
     {
         public static IServiceCollection AddWireless(this IServiceCollection services, string ssid, string psk)
         {
-            return AddWireless(services, ssid, psk, WiFiMode.AccessPoint, MikroBus.One);
+            return AddWireless(services, ssid, psk, WiFiMode.Station, MikroBus.One);
         }
 
         public static IServiceCollection AddWireless(this IServiceCollection services, string ssid, string psk, WiFiMode mode, MikroBus slot)
@@ -53,6 +53,8 @@ namespace Bytewizer.TinyCLR.Boards
                 enablePin = SC20260.GpioPin.PI5;
             }
 
+            var gpioController = GpioController.GetDefault();
+
             services.AddWireless(
                 SC20260.NetworkController.ATWinc15x0,
                 new WiFiNetworkInterfaceSettings()
@@ -65,14 +67,14 @@ namespace Bytewizer.TinyCLR.Boards
                 {
                     SpiApiName = SC20260.SpiBus.Spi3,
                     GpioApiName = SC20260.GpioPin.Id,
-                    InterruptPin = GpioController.GetDefault().OpenPin(interruptPin),
+                    InterruptPin = gpioController.OpenPin(interruptPin),
                     InterruptEdge = GpioPinEdge.FallingEdge,
                     InterruptDriveMode = GpioPinDriveMode.InputPullUp,
-                    ResetPin = GpioController.GetDefault().OpenPin(resetPin),
+                    ResetPin = gpioController.OpenPin(resetPin),
                     ResetActiveState = GpioPinValue.Low,
                     SpiSettings = new SpiConnectionSettings()
                     {
-                        ChipSelectLine = GpioController.GetDefault().OpenPin(chipSelectLine),
+                        ChipSelectLine = gpioController.OpenPin(chipSelectLine),
                         ClockFrequency = 4000000,
                         Mode = SpiMode.Mode0,
                         ChipSelectType = SpiChipSelectType.Gpio,

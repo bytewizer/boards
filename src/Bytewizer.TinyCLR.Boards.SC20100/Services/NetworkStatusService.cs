@@ -17,13 +17,13 @@ namespace Bytewizer.TinyCLR.Boards
         {
             _configuration = configuration;
 
-            _led = GpioController.GetDefault().OpenPin(FEZDuino.GpioPin.Led);
+            _led = GpioController.GetDefault().OpenPin(SC20100.GpioPin.PB0);
             _led.SetDriveMode(GpioPinDriveMode.Output);
 
-            var networkServices = (INetworkService)services.GetService(typeof(WirelessService));
-            if (networkServices != null)
+            var networkServices = services.GetService(new Type[] { typeof(IEthernetService), typeof(IWirelessService) });
+            foreach (INetworkService service in networkServices)
             {
-                networkServices.Enable();
+                service.Enable();
             }
         }
 

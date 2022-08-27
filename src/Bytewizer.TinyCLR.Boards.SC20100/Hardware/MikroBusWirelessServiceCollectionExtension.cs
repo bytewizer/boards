@@ -3,29 +3,37 @@
 using Bytewizer.TinyCLR.DependencyInjection;
 
 using GHIElectronics.TinyCLR.Pins;
-using GHIElectronics.TinyCLR.Devices.Spi;
 using GHIElectronics.TinyCLR.Devices.Gpio;
+using GHIElectronics.TinyCLR.Devices.Spi;
 using GHIElectronics.TinyCLR.Devices.Network;
 
 namespace Bytewizer.TinyCLR.Boards
 {
-    public static class MikroBusEthernetServiceCollectionExtension
+    public static class MikroBusWirelessServiceCollectionExtension
     {
-        public static IServiceCollection AddEthernet(this IServiceCollection services)
+        public static IServiceCollection AddWireless(this IServiceCollection services, string ssid, string psk)
         {
-            return AddEthernet(services, MikroBus.One);
+            return AddWireless(services, ssid, psk, WiFiMode.Station, MikroBus.One);
         }
 
-        public static IServiceCollection AddEthernet(this IServiceCollection services, MikroBus slot)
+        public static IServiceCollection AddWireless(this IServiceCollection services, string ssid, string psk, MikroBus slot)
         {
-            var mac = new byte[6] { 0x00, 0x8D, 0xB4, 0x49, 0xAD, 0xBD };
-
-            return AddEthernet(services, mac, slot);
+            return AddWireless(services, ssid, psk, WiFiMode.Station, slot);
         }
 
-        public static IServiceCollection AddEthernet(this IServiceCollection services, byte[] macAddress, MikroBus slot)
+        public static IServiceCollection AddWireless(this IServiceCollection services, string ssid, string psk, WiFiMode mode, MikroBus slot)
         {
             if (services == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            if (string.IsNullOrEmpty(ssid))
+            {
+                throw new ArgumentNullException();
+            }
+
+            if (string.IsNullOrEmpty(psk))
             {
                 throw new ArgumentNullException();
             }
@@ -47,27 +55,31 @@ namespace Bytewizer.TinyCLR.Boards
                 interruptPin = SC20100.GpioPin.PA8;
                 resetPin = SC20100.GpioPin.PD15;
                 chipSelectLine = SC20100.GpioPin.PD14;
-                enablePin = SC20100.GpioPin.PA3;
+                enablePin = SC20100.GpioPin.PA6;
             }
 
-            services.AddEthernet(
-                SC20100.NetworkController.Enc28j60,
-                new EthernetNetworkInterfaceSettings()
+            var gpioController = GpioController.GetDefault();
+
+            services.AddWireless(
+                SC20100.NetworkController.ATWinc15x0,
+                new WiFiNetworkInterfaceSettings()
                 {
-                    MacAddress = macAddress
+                    Ssid = ssid,
+                    Password = psk,
+                    Mode = mode
                 },
                 new SpiNetworkCommunicationInterfaceSettings()
                 {
                     SpiApiName = SC20100.SpiBus.Spi3,
                     GpioApiName = SC20100.GpioPin.Id,
-                    InterruptPin = GpioController.GetDefault().OpenPin(interruptPin),
+                    InterruptPin = gpioController.OpenPin(interruptPin),
                     InterruptEdge = GpioPinEdge.FallingEdge,
                     InterruptDriveMode = GpioPinDriveMode.InputPullUp,
-                    ResetPin = GpioController.GetDefault().OpenPin(resetPin),
+                    ResetPin = gpioController.OpenPin(resetPin),
                     ResetActiveState = GpioPinValue.Low,
                     SpiSettings = new SpiConnectionSettings()
                     {
-                        ChipSelectLine = GpioController.GetDefault().OpenPin(chipSelectLine),
+                        ChipSelectLine = gpioController.OpenPin(chipSelectLine),
                         ClockFrequency = 4000000,
                         Mode = SpiMode.Mode0,
                         ChipSelectType = SpiChipSelectType.Gpio,

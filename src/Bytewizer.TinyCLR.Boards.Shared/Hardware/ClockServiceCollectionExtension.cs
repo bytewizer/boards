@@ -9,11 +9,6 @@ namespace Bytewizer.TinyCLR.Boards
 {
     public static class ClockServiceCollectionExtension
     {
-        public static IServiceCollection AddClock(this IServiceCollection services)
-        {
-            return AddClock(services, 0);
-        }
-
         public static IServiceCollection AddClock(this IServiceCollection services, int timezoneOffset)
         {
             if (services == null)
@@ -21,9 +16,9 @@ namespace Bytewizer.TinyCLR.Boards
                 throw new ArgumentNullException();
             }
 
-            services.TryAdd(
+            services.Replace(
                 new ServiceDescriptor(
-                    typeof(ClockService),
+                    typeof(IClockService),
                     new ClockService(timezoneOffset)
                 ));
 
@@ -31,7 +26,15 @@ namespace Bytewizer.TinyCLR.Boards
         }
     }
 
-    public class ClockService : IDisposable
+    public interface IClockService : IDisposable
+    {
+        RtcController Controller { get; }
+        DateTime UtcNow { get; }
+        DateTime Now { get; }
+        void SetTime(DateTime value);
+    }
+
+    public class ClockService : IClockService
     {
         private readonly int _timeZoneOffset;
 

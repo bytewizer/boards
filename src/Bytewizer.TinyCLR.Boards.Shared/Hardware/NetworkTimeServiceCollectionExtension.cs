@@ -4,7 +4,6 @@ using System.Threading;
 using Bytewizer.TinyCLR.Hosting;
 using Bytewizer.TinyCLR.Logging;
 using Bytewizer.TinyCLR.DependencyInjection;
-using Bytewizer.TinyCLR.Hosting.Configuration;
 
 namespace Bytewizer.TinyCLR.Boards
 {
@@ -27,19 +26,19 @@ namespace Bytewizer.TinyCLR.Boards
     {
         private readonly ILogger _logger;
         private readonly IConfiguration _configuration;
-        private readonly ClockService _clock;
+        private readonly IClockService _clock;
 
-        public NetworkTimeService(ILoggerFactory loggerFactory, IConfiguration configuration, ClockService clock)
+        public NetworkTimeService(IClockService clock, IConfiguration configuration, ILoggerFactory loggerFactory)
             : base(TimeSpan.FromSeconds(20), TimeSpan.FromDays(1))
         {
-            _logger = loggerFactory.CreateLogger(nameof(NetworkTimeService));
-            _configuration = configuration;
             _clock = clock;
+            _configuration = configuration;
+            _logger = loggerFactory.CreateLogger(nameof(NetworkTimeService));
         }
 
         protected override void ExecuteAsync()
         {
-            var connected = (bool)_configuration.GetOrDefault(BoardSettings.NetworkConnected, false);
+            var connected = (bool)_configuration[BoardSettings.NetworkConnected];
 
             if (connected)
             {

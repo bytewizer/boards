@@ -28,6 +28,8 @@ namespace Bytewizer.TinyCLR.Boards.SC20260D
                 throw new ArgumentNullException();
             }
 
+            var gpioController = GpioController.GetDefault();
+
             services.AddWireless(
                 SC20100.NetworkController.ATWinc15x0,
                 new WiFiNetworkInterfaceSettings()
@@ -39,14 +41,14 @@ namespace Bytewizer.TinyCLR.Boards.SC20260D
                 {
                     SpiApiName = FEZFeather.SpiBus.WiFi,
                     GpioApiName = SC20100.GpioPin.Id,
-                    InterruptPin = GpioController.GetDefault().OpenPin(FEZFeather.GpioPin.WiFiInterrupt),
+                    InterruptPin = gpioController.OpenPin(FEZFeather.GpioPin.WiFiInterrupt),
                     InterruptEdge = GpioPinEdge.FallingEdge,
                     InterruptDriveMode = GpioPinDriveMode.InputPullUp,
-                    ResetPin = GpioController.GetDefault().OpenPin(FEZFeather.GpioPin.WiFiReset),
+                    ResetPin = gpioController.OpenPin(FEZFeather.GpioPin.WiFiReset),
                     ResetActiveState = GpioPinValue.Low,
                     SpiSettings = new SpiConnectionSettings()
                     {
-                        ChipSelectLine = GpioController.GetDefault().OpenPin(FEZFeather.GpioPin.WiFiChipselect),
+                        ChipSelectLine = gpioController.OpenPin(FEZFeather.GpioPin.WiFiChipselect),
                         ClockFrequency = 4000000,
                         Mode = SpiMode.Mode0,
                         ChipSelectType = SpiChipSelectType.Gpio,

@@ -9,14 +9,9 @@ using GHIElectronics.TinyCLR.Devices.Network;
 
 namespace Bytewizer.TinyCLR.Boards
 {
-    public static class IntegratedWirelessServiceCollectionExtension
+    public static class IntegratedWirelessServiceCollectionExtension 
     {
         public static IServiceCollection AddWireless(this IServiceCollection services, string ssid, string psk)
-        {
-            return AddWireless(services, ssid, psk, WiFiMode.Station);
-        }
-
-        public static IServiceCollection AddWireless(this IServiceCollection services, string ssid, string psk, WiFiMode mode)
         {
             if (services == null)
             {
@@ -40,21 +35,20 @@ namespace Bytewizer.TinyCLR.Boards
                 new WiFiNetworkInterfaceSettings()
                 {
                     Ssid = ssid,
-                    Password = psk,
-                    Mode = mode
+                    Password = psk
                 },
                 new SpiNetworkCommunicationInterfaceSettings()
                 {
-                    SpiApiName = FEZDuino.SpiBus.WiFi,
+                    SpiApiName = FEZBit.SpiBus.WiFi,
                     GpioApiName = SC20100.GpioPin.Id,
-                    InterruptPin = gpioController.OpenPin(FEZDuino.GpioPin.WiFiInterrupt),
+                    InterruptPin = gpioController.OpenPin(FEZBit.GpioPin.WiFiInterrupt),
                     InterruptEdge = GpioPinEdge.FallingEdge,
                     InterruptDriveMode = GpioPinDriveMode.InputPullUp,
-                    ResetPin = gpioController.OpenPin(FEZDuino.GpioPin.WiFiReset),
+                    ResetPin = gpioController.OpenPin(FEZBit.GpioPin.WiFiReset),
                     ResetActiveState = GpioPinValue.Low,
                     SpiSettings = new SpiConnectionSettings()
                     {
-                        ChipSelectLine = gpioController.OpenPin(FEZDuino.GpioPin.WiFiChipselect),
+                        ChipSelectLine = gpioController.OpenPin(FEZBit.GpioPin.WiFiChipselect),
                         ClockFrequency = 4000000,
                         Mode = SpiMode.Mode0,
                         ChipSelectType = SpiChipSelectType.Gpio,
@@ -62,9 +56,9 @@ namespace Bytewizer.TinyCLR.Boards
                         ChipSelectSetupTime = TimeSpan.FromTicks(10)
                     }
                 },
-                FEZDuino.GpioPin.WiFiEnable
+                FEZBit.GpioPin.WiFiEnable
                 );
-
+           
             return services;
         }
     }

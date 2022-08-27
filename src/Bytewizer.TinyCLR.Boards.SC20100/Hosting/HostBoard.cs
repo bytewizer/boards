@@ -24,7 +24,9 @@ namespace Bytewizer.TinyCLR.Boards
                     context.Configuration[BoardSettings.BoardType] = typeof(SC20100);
                     context.Configuration[BoardSettings.NetworkConnected] = false;
 
-                    services.AddClock();
+                    services.AddClock(
+                        (int)context.Configuration.GetOrDefault("timezone:offset", 0)
+                    );
                     services.AddLogging(builder =>
                     {
                         builder.AddDebug();

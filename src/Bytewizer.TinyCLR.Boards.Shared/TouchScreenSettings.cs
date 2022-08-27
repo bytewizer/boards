@@ -5,7 +5,7 @@ namespace Bytewizer.TinyCLR.Hosting
 {
     public class TouchScreenSettings 
     {
-        public int BacklighPin { get; set; }
+        public int BacklightPin { get; set; }
         public FT5xx6Controller TouchController { get; set; }
         public DisplayController DisplayController { get; set; }
     }

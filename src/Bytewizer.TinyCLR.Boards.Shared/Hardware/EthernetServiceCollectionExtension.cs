@@ -44,21 +44,21 @@ namespace Bytewizer.TinyCLR.Boards
             services.Replace(
                 new ServiceDescriptor(
                     typeof(EthernetSettings),
-                    networkSettings)
-                );
+                    networkSettings
+                ));
 
             services.TryAdd(
                 new ServiceDescriptor(
+                    typeof(IEthernetService), 
                     typeof(EthernetService), 
-                    typeof(EthernetService), 
-                    ServiceLifetime.Singleton)
-                );
+                    ServiceLifetime.Singleton
+                ));
 
             return services;
         }
     }
 
-    public class EthernetService : IDisposable
+    public class EthernetService : INetworkService
     {
         private readonly ILogger _logger;
         private readonly GpioPin _enablePin;
@@ -66,7 +66,7 @@ namespace Bytewizer.TinyCLR.Boards
 
         public NetworkController Controller { get; private set; }
 
-        public bool EthernetLinked { get; private set; }
+        public bool LinkConnected { get => Controller.GetLinkConnected(); }
 
         public EthernetService(
             ILoggerFactory loggerFactory,
@@ -79,12 +79,6 @@ namespace Bytewizer.TinyCLR.Boards
             _enablePin = GpioController.GetDefault().OpenPin(settings.EnablePin);
             _enablePin.SetDriveMode(GpioPinDriveMode.Output);
             _enablePin.Write(GpioPinValue.Low);
-
-            var macAddress = (byte[])_configuration[BoardSettings.EthernetMacAddress];
-            if (macAddress != null)
-            {
-                settings.InterfaceSettings.MacAddress = macAddress;
-            }
 
             Controller = NetworkController.FromName(settings.Controller);
             Controller.SetCommunicationInterfaceSettings(settings.CommunicationSettings);
@@ -141,12 +135,10 @@ namespace Bytewizer.TinyCLR.Boards
         {
             if (args.Connected)
             {
-                EthernetLinked = true;
                 _logger.Log(LogLevel.Information, "Ethernet interface connected.");
             }
             else
             {
-                EthernetLinked = false;
                 _configuration[BoardSettings.NetworkConnected] = false;
                 _logger.Log(LogLevel.Information, "Ethernet interface disconnected.");
             }
