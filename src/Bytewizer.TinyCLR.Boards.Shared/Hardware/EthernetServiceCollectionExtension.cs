@@ -80,15 +80,47 @@ namespace Bytewizer.TinyCLR.Boards
             _enablePin.SetDriveMode(GpioPinDriveMode.Output);
             _enablePin.Write(GpioPinValue.Low);
 
+            if (settings.InterfaceSettings.DhcpEnable == true)
+            {
+                settings.InterfaceSettings.DhcpEnable = (bool)configuration.GetValueOrDefault(
+                        EthernetSettings.DhcpEnable, true
+                    );
+            }
+
+            if (settings.InterfaceSettings.DynamicDnsEnable == true)
+            {
+                settings.InterfaceSettings.DynamicDnsEnable = (bool)configuration.GetValueOrDefault(
+                        EthernetSettings.DdnsEnable, true
+                    );
+            }
+
+            if (settings.InterfaceSettings.MulticastDnsEnable == false)
+            {
+                settings.InterfaceSettings.MulticastDnsEnable = (bool)configuration.GetValueOrDefault(
+                        EthernetSettings.DdnsEnable, false
+                    );
+            }
+
+            settings.InterfaceSettings.Address ??=
+                configuration.GetIpAddress(EthernetSettings.IpAddress);
+            settings.InterfaceSettings.MacAddress ??=
+                configuration.GetMacAddress(EthernetSettings.MacAddress);
+            settings.InterfaceSettings.GatewayAddress ??=
+                configuration.GetIpAddress(EthernetSettings.GatewayAddress);
+            settings.InterfaceSettings.SubnetMask ??=
+                configuration.GetIpAddress(EthernetSettings.SubnetMask);
+            settings.InterfaceSettings.DnsAddresses ??=
+                configuration.GetDnsAddresses(EthernetSettings.DnsAddresses);
+
             Controller = NetworkController.FromName(settings.Controller);
             Controller.SetCommunicationInterfaceSettings(settings.CommunicationSettings);
             Controller.SetInterfaceSettings(settings.InterfaceSettings);
 
-            var defaultController = configuration[BoardSettings.DefaultController];
+            var defaultController = configuration[BoardSettings.ControllerDefault];
             if (defaultController == null)
             {
                 Controller.SetAsDefaultController();
-                configuration[BoardSettings.DefaultController] = Controller;
+                configuration[BoardSettings.ControllerDefault] = Controller;
             }
 
             Controller.NetworkLinkConnectedChanged += NetworkLinkConnectedChanged;

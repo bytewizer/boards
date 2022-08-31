@@ -7,18 +7,13 @@ using GHIElectronics.TinyCLR.Devices.Network;
 
 namespace Bytewizer.TinyCLR.Boards
 {
-    public static class BuiltInEthernetServiceCollectionExtension 
+    public static class BuiltInEthernetServiceCollectionExtension
     {
         public static IServiceCollection AddEthernet(this IServiceCollection services, byte[] macAddress)
         {
             if (services == null)
             {
                 throw new ArgumentNullException();
-            }
-
-            if (macAddress.Length != 6)
-            {
-                throw new ArgumentException();
             }
 
             services.AddEthernet(

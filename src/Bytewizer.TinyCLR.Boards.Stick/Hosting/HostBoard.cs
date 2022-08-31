@@ -14,17 +14,16 @@ namespace Bytewizer.TinyCLR.Boards
             var host = Host.CreateBuilder()
                 .ConfigureServices((context, services) =>
                 {
-                    context.Configuration[BoardSettings.BoardType] = typeof(FEZDuino);
-                    context.Configuration[BoardSettings.NetworkConnected] = false;
+                    context.Configuration[BoardSettings.BoardType] = typeof(FEZStick);
 
                     services.AddClock(
-                        (int)context.Configuration.GetValueOrDefault(BoardSettings.TimeZoneOffset, 0)
+                         (int)context.Configuration.GetValueOrDefault(BoardSettings.TimeZoneOffset, 0)
                     );
                     services.AddLogging(builder =>
                     {
                         builder.AddDebug();
                         builder.SetMinimumLevel(
-                                context.Configuration.GetLogLevel(BoardSettings.MinimumLogLevel)
+                                context.Configuration.GetLogLevel(BoardSettings.MinimumLoggingLevel)
                             );
                     });
                 })

@@ -42,23 +42,24 @@ namespace Bytewizer.TinyCLR.Boards
 
             if (connected)
             {
+                var ntpServer = (string)_configuration.GetValueOrDefault(BoardSettings.NetworkTimeServer, "pool.ntp.org");
+
                 try
                 {
-                    var accurateTime = GetNetworkTime();
+                    var accurateTime = GetNetworkTime(ntpServer);
 
                     _clock.SetTime(accurateTime);
-                    _logger.Log(LogLevel.Information, $"Realtime clock set to {_clock.Now:MM/dd/yyyy hh:mm:ss tt} UTC from network time.");
+                    _logger.Log(LogLevel.Information, $"Realtime clock set to {_clock.Now:MM/dd/yyyy hh:mm:ss tt} UTC from '{ntpServer}'.");
                 }
                 catch
                 {
-                    _logger.Log(LogLevel.Information, "Failed getting network time.");
+                    _logger.Log(LogLevel.Error, $"Failed getting network time from '{ntpServer}'.");
                 }
             }
         }
 
-        public static DateTime GetNetworkTime()
+        public static DateTime GetNetworkTime(string ntpServer)
         {
-            const string ntpServer = "pool.ntp.org";
             var ntpData = new byte[48];
             ntpData[0] = 0x1B;
 

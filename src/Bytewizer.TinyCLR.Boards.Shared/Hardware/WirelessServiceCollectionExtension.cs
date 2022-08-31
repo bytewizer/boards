@@ -101,15 +101,60 @@ namespace Bytewizer.TinyCLR.Boards
             _enablePin.SetDriveMode(GpioPinDriveMode.Output);
             _enablePin.Write(GpioPinValue.Low);
 
+            var interfaceSettings =  settings.InterfaceSettings as WiFiNetworkInterfaceSettings;
+
+            if (interfaceSettings.DhcpEnable == true)
+            {
+                interfaceSettings.DhcpEnable = (bool)configuration.GetValueOrDefault(
+                        WirelessSettings.DhcpEnable, true
+                    );
+            }
+
+            if (interfaceSettings.DynamicDnsEnable == true)
+            {
+                interfaceSettings.DynamicDnsEnable = (bool)configuration.GetValueOrDefault(
+                        WirelessSettings.DdnsEnable, true
+                    );
+            }
+
+            if (interfaceSettings.MulticastDnsEnable == false)
+            {
+                interfaceSettings.MulticastDnsEnable = (bool)configuration.GetValueOrDefault(
+                        WirelessSettings.DdnsEnable, false
+                    );
+            }
+
+            if (interfaceSettings.Channel == 1)
+            {
+                interfaceSettings.Channel = (uint)configuration.GetValueOrDefault(
+                        WirelessSettings.Channel, 1u
+                    );
+            }
+
+            interfaceSettings.Ssid ??=
+                configuration.GetValue(WirelessSettings.Ssid);
+            interfaceSettings.Password ??=
+                configuration.GetValue(WirelessSettings.Psk);
+            interfaceSettings.Address ??=
+                configuration.GetIpAddress(WirelessSettings.IpAddress);
+            interfaceSettings.MacAddress ??=
+                configuration.GetMacAddress(WirelessSettings.MacAddress);
+            interfaceSettings.GatewayAddress ??=
+                configuration.GetIpAddress(WirelessSettings.GatewayAddress);
+            interfaceSettings.SubnetMask ??=
+                configuration.GetIpAddress(WirelessSettings.SubnetMask);
+            interfaceSettings.DnsAddresses ??=
+                configuration.GetDnsAddresses(WirelessSettings.DnsAddresses);
+
             Controller = NetworkController.FromName(settings.Controller);
             Controller.SetCommunicationInterfaceSettings(settings.CommunicationSettings);
             Controller.SetInterfaceSettings(settings.InterfaceSettings);
 
-            var defaultController = configuration[BoardSettings.DefaultController];
+            var defaultController = configuration[BoardSettings.ControllerDefault];
             if (defaultController == null)
             {
                 Controller.SetAsDefaultController();
-                configuration[BoardSettings.DefaultController] = Controller;
+                configuration[BoardSettings.ControllerDefault] = Controller;
             }
 
             Controller.NetworkLinkConnectedChanged += NetworkLinkConnectedChanged;

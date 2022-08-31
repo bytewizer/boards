@@ -48,6 +48,9 @@
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\BoardSettings.cs">
       <Link>BoardSettings.cs</Link>
     </Compile>
+    <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\ConfigurationExtensions.cs">
+      <Link>Hardware\Shared\ConfigurationExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\Hardware\ClockServiceCollectionExtension.cs">
       <Link>Hardware\Shared\ClockServiceCollectionExtension.cs</Link>
     </Compile>
@@ -82,22 +85,28 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Bytewizer.TinyCLR.Core">
-      <Version>2.1.12</Version>
+      <Version>2.1.14</Version>
+    </PackageReference>
+    <PackageReference Include="Bytewizer.TinyCLR.DependencyInjection">
+      <Version>2.1.14</Version>
+    </PackageReference>
+    <PackageReference Include="Bytewizer.TinyCLR.DependencyInjection.Abstractions">
+      <Version>2.1.14</Version>
     </PackageReference>
     <PackageReference Include="Bytewizer.TinyCLR.Hosting">
-      <Version>2.1.12</Version>
+      <Version>2.1.14</Version>
     </PackageReference>
     <PackageReference Include="Bytewizer.TinyCLR.Hosting.Configuration">
-      <Version>2.1.12</Version>
+      <Version>2.1.14</Version>
     </PackageReference>
     <PackageReference Include="Bytewizer.TinyCLR.Logging">
-      <Version>2.1.12</Version>
+      <Version>2.1.14</Version>
     </PackageReference>
     <PackageReference Include="Bytewizer.TinyCLR.Logging.Abstractions">
-      <Version>2.1.12</Version>
+      <Version>2.1.14</Version>
     </PackageReference>
     <PackageReference Include="Bytewizer.TinyCLR.Logging.Debug">
-      <Version>2.1.12</Version>
+      <Version>2.1.14</Version>
     </PackageReference>
     <PackageReference Include="GHIElectronics.TinyCLR.Core">
       <Version>2.2.0.4200</Version>

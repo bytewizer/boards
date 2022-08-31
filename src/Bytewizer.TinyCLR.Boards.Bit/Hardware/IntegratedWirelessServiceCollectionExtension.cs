@@ -13,17 +13,12 @@ namespace Bytewizer.TinyCLR.Boards
     {
         public static IServiceCollection AddWireless(this IServiceCollection services, string ssid, string psk)
         {
+            return AddWireless(services, ssid, psk, WiFiMode.Station);
+        }
+
+        public static IServiceCollection AddWireless(this IServiceCollection services, string ssid, string psk, WiFiMode mode)
+        {
             if (services == null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            if (string.IsNullOrEmpty(ssid))
-            {
-                throw new ArgumentNullException();
-            }
-
-            if (string.IsNullOrEmpty(psk))
             {
                 throw new ArgumentNullException();
             }
@@ -35,7 +30,8 @@ namespace Bytewizer.TinyCLR.Boards
                 new WiFiNetworkInterfaceSettings()
                 {
                     Ssid = ssid,
-                    Password = psk
+                    Password = psk,
+                    Mode = mode
                 },
                 new SpiNetworkCommunicationInterfaceSettings()
                 {

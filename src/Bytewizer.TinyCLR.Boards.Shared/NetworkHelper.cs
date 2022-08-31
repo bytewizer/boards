@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 using GHIElectronics.TinyCLR.Devices.Network;
 
@@ -39,7 +40,7 @@ namespace Bytewizer.TinyCLR.Boards
 
         internal static string GetNetworkSettings(NetworkController controller)
         {
-            var physicalAddress = GetPhysicalAddress(controller.GetInterfaceProperties().MacAddress);
+            var physicalAddress = BitConverter.ToString(controller.GetInterfaceProperties().MacAddress);
 
             var dhcpEnabled = controller.ActiveInterfaceSettings.DhcpEnable ? "Yes" : "No";
             var dnsEnabled = controller.ActiveInterfaceSettings.DynamicDnsEnable ? "Yes" : "No";
@@ -55,24 +56,24 @@ namespace Bytewizer.TinyCLR.Boards
             return sb.ToString();
         }
 
-        private static string GetPhysicalAddress(byte[] bytes, char seperator = '-')
-        {
-            if (bytes == null)
-            {
-                return null;
-            }
+        //private static string GetPhysicalAddress(byte[] bytes, char seperator = '-')
+        //{
+        //    if (bytes == null)
+        //    {
+        //        return null;
+        //    }
 
-            string physicalAddress = string.Empty;
+        //    string physicalAddress = string.Empty;
 
-            for (int i = 0; i < bytes.Length; i++)
-            {
-                physicalAddress += bytes[i].ToString("X2");
+        //    for (int i = 0; i < bytes.Length; i++)
+        //    {
+        //        physicalAddress += bytes[i].ToString("X2");
 
-                if (i != bytes.Length - 1)
-                    physicalAddress += seperator;
-            }
+        //        if (i != bytes.Length - 1)
+        //            physicalAddress += seperator;
+        //    }
 
-            return physicalAddress;
-        }
+        //    return physicalAddress;
+        //}
     }
 }

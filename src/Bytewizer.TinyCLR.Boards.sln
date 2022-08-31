@@ -9,13 +9,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bytewizer.TinyCLR.Boards.SC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bytewizer.TinyCLR.Boards.Duino", "Bytewizer.TinyCLR.Boards.Duino\Bytewizer.TinyCLR.Boards.Duino.csproj", "{558D6917-49D1-4E76-BFF4-23221BAD7072}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Boards", "Boards", "{13B4A8EE-C5AD-43DC-BA54-19953AE9223E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bytewizer.TinyCLR.Boards.Feather", "Bytewizer.TinyCLR.Boards.Feather\Bytewizer.TinyCLR.Boards.Feather.csproj", "{BDF30BBE-C659-4E49-A5D8-CE1A79AC3877}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bytewizer.TinyCLR.Boards.SC20100", "Bytewizer.TinyCLR.Boards.SC20100\Bytewizer.TinyCLR.Boards.SC20100.csproj", "{537D7917-49D1-4E76-BFF4-23221BAD7072}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bytewizer.TinyCLR.Boards.Bit", "Bytewizer.TinyCLR.Boards.Bit\Bytewizer.TinyCLR.Boards.Bit.csproj", "{9CBEA877-BA1D-4EA9-BB49-479242850EA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bytewizer.TinyCLR.Boards.Stick", "Bytewizer.TinyCLR.Boards.Stick\Bytewizer.TinyCLR.Boards.Stick.csproj", "{11A18CE4-E46A-40B9-A8B2-ABE402FA150F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,17 +47,13 @@ Global
 		{9CBEA877-BA1D-4EA9-BB49-479242850EA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CBEA877-BA1D-4EA9-BB49-479242850EA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CBEA877-BA1D-4EA9-BB49-479242850EA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11A18CE4-E46A-40B9-A8B2-ABE402FA150F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11A18CE4-E46A-40B9-A8B2-ABE402FA150F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11A18CE4-E46A-40B9-A8B2-ABE402FA150F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11A18CE4-E46A-40B9-A8B2-ABE402FA150F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{558D7917-49D1-4E76-BFF4-23221BAD7072} = {13B4A8EE-C5AD-43DC-BA54-19953AE9223E}
-		{547D7917-49D1-4E76-BFF4-23221BAD7072} = {13B4A8EE-C5AD-43DC-BA54-19953AE9223E}
-		{558D6917-49D1-4E76-BFF4-23221BAD7072} = {13B4A8EE-C5AD-43DC-BA54-19953AE9223E}
-		{BDF30BBE-C659-4E49-A5D8-CE1A79AC3877} = {13B4A8EE-C5AD-43DC-BA54-19953AE9223E}
-		{537D7917-49D1-4E76-BFF4-23221BAD7072} = {13B4A8EE-C5AD-43DC-BA54-19953AE9223E}
-		{9CBEA877-BA1D-4EA9-BB49-479242850EA9} = {13B4A8EE-C5AD-43DC-BA54-19953AE9223E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C04E0A8C-D974-4A4F-9D49-9E9AC9A78F05}

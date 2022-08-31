@@ -7,15 +7,8 @@ using GHIElectronics.TinyCLR.Pins;
 
 namespace Bytewizer.TinyCLR.Boards
 {
-    /// <summary>
-    /// Provides convenience methods for creating instances of <see cref="IHostBuilder"/>.
-    /// </summary>
     public static class HostBoard
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="HostBuilder"/>.
-        /// </summary>
-        /// <returns>The initialized <see cref="IHostBuilder"/>.</returns>
         public static IHostBuilder CreateDefaultBuilder()
         {
             var host = Host.CreateBuilder()
@@ -25,12 +18,15 @@ namespace Bytewizer.TinyCLR.Boards
                     context.Configuration[BoardSettings.NetworkConnected] = false;
 
                     services.AddClock(
-                        (int)context.Configuration.GetOrDefault("timezone:offset", 0)
+                        (int)context.Configuration.GetValueOrDefault(BoardSettings.TimeZoneOffset, 0)
                     );
                     services.AddLogging(builder =>
-                        {
-                            builder.AddDebug();
-                        });
+                    {
+                        builder.AddDebug();
+                        builder.SetMinimumLevel(
+                                context.Configuration.GetLogLevel(BoardSettings.MinimumLogLevel)
+                            );
+                    });
                 })
                 .ConfigureAppConfiguration(builder =>
                 {

@@ -23,16 +23,6 @@ namespace Bytewizer.TinyCLR.Boards
                 throw new ArgumentNullException();
             }
 
-            if (string.IsNullOrEmpty(ssid))
-            {
-                throw new ArgumentNullException();
-            }
-
-            if (string.IsNullOrEmpty(psk))
-            {
-                throw new ArgumentNullException();
-            }
-
             int interruptPin;
             int resetPin;
             int chipSelectLine;
