@@ -59,8 +59,8 @@ namespace Bytewizer.TinyCLR.Boards
         private readonly GpioPin _backlightPin;
 
         public ST7735Controller DisplayController { get; private set; }
-        public int Width { get => DisplayController.Width; }
-        public int Height { get => DisplayController.Height; }
+        public int Width { get => 160; }
+        public int Height { get => 128; }
 
         public DisplayService(DisplaySettings settings)
         {
