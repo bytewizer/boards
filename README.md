@@ -4,11 +4,121 @@
 [![Release](https://github.com/bytewizer/boards/actions/workflows/release.yml/badge.svg)](https://github.com/bytewizer/boards/actions/workflows/release.yml)
 [![Build](https://github.com/bytewizer/boards/actions/workflows/actions.yml/badge.svg)](https://github.com/bytewizer/boards/actions/workflows/actions.yml)
 
-This repo contains several runtime libraries built for [GHI Electronics TinyCLR OS](https://www.ghielectronics.com/).
+This repo contains several single board computer libraries built for [GHI Electronics TinyCLR OS](https://www.ghielectronics.com/).
 
 ## Give a Star! :star:
 
 If you like or are using this project to start your solution, please give it a star. Thanks!
+
+# Wireless Application
+Install one of the release package from [NuGet](https://www.nuget.org/packages?q=bytewizer.tinyclr.boards) or using the Package Manager Console matching your board :
+```powershell
+PM> Install-Package Bytewizer.TinyCLR.Boards.Bit
+PM> Install-Package Bytewizer.TinyCLR.Boards.Duino
+PM> Install-Package Bytewizer.TinyCLR.Boards.Feather
+PM> Install-Package Bytewizer.TinyCLR.Boards.Portal
+PM> Install-Package Bytewizer.TinyCLR.Boards.Switch
+PM> Install-Package Bytewizer.TinyCLR.Boards.SC20100
+PM> Install-Package Bytewizer.TinyCLR.Boards.SC20260
+```
+
+```csharp
+using Bytewizer.TinyCLR.Boards;
+using Bytewizer.TinyCLR.Hosting;
+
+namespace Bytewizer.Playground.Moxi
+{
+    internal class Program
+    {
+        static void Main()
+        {
+            IHost host = HostBoard.CreateDefaultBuilder()
+                .ConfigureServices(services =>
+                {
+                    services.AddWireless("ssid", "password");
+                    services.AddNetworkTime();
+
+                    services.AddHostedService(typeof(NetworkStatusService));
+
+                }).Build();
+
+            host.Run();
+        }
+    }
+}
+```
+
+# Wireless Application with json configuration file on sd card
+
+```powershell
+PM> Install-Package Bytewizer.TinyCLR.Hosting.Configuration.Json
+```
+
+```json
+{
+    "wireless": {
+        "ssid": "ssid",
+        "psk": "passworkd"
+    },
+    "logging": {
+        "log-level": "Information"
+    },
+    "timezone": {
+        "offset": "-25200"
+    }
+}
+```
+
+```csharp
+internal class Program
+{
+    static void Main()
+    {
+        IHost host = HostBoard.CreateDefaultBuilder()
+            .ConfigureAppConfiguration(builder =>
+            {
+                builder.AddJsonFile("appsettings.json", optional:false);
+            })
+            .ConfigureServices(services =>
+            {
+                services.AddWireless();
+                services.AddNetworkTime();
+
+                services.AddHostedService(typeof(NetworkStatusService));
+
+            }).Build();
+
+        host.Run();
+    }
+}
+
+public static class DefaultServiceCollectionExtension
+{
+    public static IServiceCollection AddWireless(this IServiceCollection services)
+    {
+        return services.AddWireless(null, null);
+    }
+}
+
+public static class DefaultConfigurationBuilderExtensions
+{
+    public static IConfigurationBuilder AddJsonFile(
+        this IConfigurationBuilder builder, string path, bool optional)
+    {
+        try
+        {
+            var controller = StorageController.GetDefault();
+            var driveProvider = FileSystem.Mount(controller.Hdc);
+
+            return builder.AddJsonFile(driveProvider, path, optional);
+        }
+        catch
+        {
+            throw new InvalidOperationException("Failed to mount sd card.");
+        }
+    }
+}
+```
 
 ## Requirements
 

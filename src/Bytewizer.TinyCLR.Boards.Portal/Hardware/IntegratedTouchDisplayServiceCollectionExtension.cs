@@ -1,5 +1,5 @@
 ﻿using System;
-using Bytewizer.TinyCLR.Hosting;
+
 using Bytewizer.TinyCLR.DependencyInjection;
 
 using GHIElectronics.TinyCLR.Pins;
@@ -12,10 +12,15 @@ using static GHIElectronics.TinyCLR.Drivers.FocalTech.FT5xx6.FT5xx6Controller;
 
 namespace Bytewizer.TinyCLR.Boards
 {
-    public static class IntegratedDisplayServiceCollectionExtension
+    public static class IntegratedTouchDisplayServiceCollectionExtension
     {
         public static IServiceCollection AddTouchScreen(this IServiceCollection services, DisplayOrientation orientation)
         {
+            if (services == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             TouchOrientation touchOrientation = TouchOrientation.Degrees0;
 
             switch (orientation)
@@ -72,27 +77,7 @@ namespace Bytewizer.TinyCLR.Boards
                 Orientation = touchOrientation
             };
 
-            var settings = new TouchScreenSettings()
-            {
-                DisplayController = displayController,
-                TouchController = touchController,
-                BacklightPin = FEZPortal.GpioPin.Backlight
-            };
-
-            services.TryAdd(
-                new ServiceDescriptor(
-                    typeof(TouchScreenSettings),
-                    settings
-                ));
-
-            services.TryAdd(
-                new ServiceDescriptor(
-                    typeof(TouchScreenService),
-                    typeof(TouchScreenService),
-                    ServiceLifetime.Singleton
-                ));
-
-           return services;
+            return services.AddTouchScreen(displayController, touchController, FEZPortal.GpioPin.Backlight);
         } 
     }
 }

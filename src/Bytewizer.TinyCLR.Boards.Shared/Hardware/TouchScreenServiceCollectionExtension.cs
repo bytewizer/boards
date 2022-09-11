@@ -9,7 +9,7 @@ using GHIElectronics.TinyCLR.Drivers.FocalTech.FT5xx6;
 
 namespace Bytewizer.TinyCLR.Boards
 {
-    public static class TouchDisplayServiceCollectionExtension
+    public static class TouchScreenServiceCollectionExtension
     {
         public static IServiceCollection AddTouchScreen(this IServiceCollection services)
         {

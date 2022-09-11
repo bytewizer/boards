@@ -1,14 +1,14 @@
-﻿using Bytewizer.TinyCLR.DependencyInjection;
+﻿using System;
+
+using Bytewizer.TinyCLR.DependencyInjection;
 
 using GHIElectronics.TinyCLR.Pins;
-using GHIElectronics.TinyCLR.Devices.Gpio;
-
 using GHIElectronics.TinyCLR.Devices.I2c;
-using GHIElectronics.TinyCLR.Drivers.FocalTech.FT5xx6;
+using GHIElectronics.TinyCLR.Devices.Gpio;
 using GHIElectronics.TinyCLR.Devices.Display;
+using GHIElectronics.TinyCLR.Drivers.FocalTech.FT5xx6;
 
 using static GHIElectronics.TinyCLR.Drivers.FocalTech.FT5xx6.FT5xx6Controller;
-using System;
 
 namespace Bytewizer.TinyCLR.Boards
 {

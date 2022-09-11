@@ -57,8 +57,8 @@
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\Hardware\NetworkTimeServiceCollectionExtension.cs">
       <Link>Hardware\Shared\NetworkTimeServiceCollectionExtension.cs</Link>
     </Compile>
-    <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\Hardware\TouchDisplayServiceCollectionExtension.cs">
-      <Link>Hardware\Shared\TouchDisplayServiceCollectionExtension.cs</Link>
+    <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\Hardware\TouchScreenServiceCollectionExtension.cs">
+      <Link>Hardware\Shared\TouchScreenServiceCollectionExtension.cs</Link>
     </Compile>
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\Hardware\WirelessServiceCollectionExtension.cs">
       <Link>Hardware\Shared\WirelessServiceCollectionExtension.cs</Link>
@@ -84,7 +84,7 @@
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\NetworkSettings.cs">
       <Link>Hardware\Shared\NetworkSettings.cs</Link>
     </Compile>
-    <Compile Include="Hardware\IntegratedDisplayServiceCollectionExtension.cs" />
+    <Compile Include="Hardware\IntegratedTouchDisplayServiceCollectionExtension.cs" />
     <Compile Include="Hardware\IntegratedWirelessServiceCollectionExtension.cs" />
     <Compile Include="Hosting\HostBoard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
