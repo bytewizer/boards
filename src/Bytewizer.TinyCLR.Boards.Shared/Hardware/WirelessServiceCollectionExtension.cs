@@ -62,9 +62,9 @@ namespace Bytewizer.TinyCLR.Boards
 
     public class WirelessWatchdog : SchedulerService
     {
-        private readonly IWirelessService _network;
+        private readonly INetworkService _network;
 
-        public WirelessWatchdog(IWirelessService network)       
+        public WirelessWatchdog(INetworkService network)       
             : base(TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(30))
         {
             _network = network;
