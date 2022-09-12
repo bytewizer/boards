@@ -20,7 +20,7 @@ namespace Bytewizer.TinyCLR.Boards
             _led = GpioController.GetDefault().OpenPin(FEZFeather.GpioPin.Led);
             _led.SetDriveMode(GpioPinDriveMode.Output);
 
-            var networkServices = (INetworkService)services.GetService(typeof(WirelessService));
+            var networkServices = (INetworkService)services.GetService(typeof(INetworkService));
             if (networkServices != null)
             {
                 networkServices.Enable();

@@ -41,15 +41,15 @@ namespace Bytewizer.TinyCLR.Boards
                 InterfaceSettings = settings
             };
 
-            services.Replace(
+            services.Add(
                 new ServiceDescriptor(
                     typeof(EthernetSettings),
                     networkSettings
                 ));
 
-            services.TryAdd(
+            services.Add(
                 new ServiceDescriptor(
-                    typeof(IEthernetService), 
+                    typeof(INetworkService), 
                     typeof(EthernetService), 
                     ServiceLifetime.Singleton
                 ));

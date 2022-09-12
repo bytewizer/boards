@@ -20,7 +20,7 @@ namespace Bytewizer.TinyCLR.Boards
             _led = GpioController.GetDefault().OpenPin(SC20100.GpioPin.PB0);
             _led.SetDriveMode(GpioPinDriveMode.Output);
 
-            var networkServices = services.GetService(new Type[] { typeof(IEthernetService), typeof(IWirelessService) });
+            var networkServices = services.GetService(new Type[] { typeof(INetworkService) });
             foreach (INetworkService service in networkServices)
             {
                 service.Enable();

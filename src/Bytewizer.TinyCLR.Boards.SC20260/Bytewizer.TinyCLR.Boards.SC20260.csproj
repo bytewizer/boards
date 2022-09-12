@@ -96,7 +96,7 @@
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\WirelessSettings.cs">
       <Link>Hardware\Shared\WirelessSettings.cs</Link>
     </Compile>
-    <Compile Include="Hardware\BuiltInEthernetServiceCollectionExtension.cs" />
+    <Compile Include="Hardware\IntegratedEthernetServiceCollectionExtension.cs" />
     <Compile Include="Hardware\MikroBusWirelessServiceCollectionExtension.cs" />
     <Compile Include="Hardware\IntegratedTouchDisplayServiceCollectionExtension.cs" />
     <Compile Include="Hosting\HostBoard.cs" />
