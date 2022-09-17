@@ -37,13 +37,11 @@ namespace Bytewizer.TinyCLR.Boards
             _logger = loggerFactory.CreateLogger(nameof(NetworkTimeService));
 
             Time = TimeSpan.Zero;
-            Interval = TimeSpan.FromDays(1);
+            Interval = TimeSpan.FromMinutes(1);
         }
 
         protected override void LinkConnected(NetworkController sender, NetworkAddressChangedEventArgs args)
         {
-            SetTime();
-
             _executeTimer = new Timer(state =>
             {
                 SetTime();
