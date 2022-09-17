@@ -2,7 +2,7 @@
 using Bytewizer.TinyCLR.Hosting.Configuration;
 using Bytewizer.TinyCLR.Logging;
 using Bytewizer.TinyCLR.Logging.Debug;
-
+using GHIElectronics.TinyCLR.Devices.Gpio;
 using GHIElectronics.TinyCLR.Pins;
 
 namespace Bytewizer.TinyCLR.Boards
@@ -11,11 +11,14 @@ namespace Bytewizer.TinyCLR.Boards
     {
         public static IHostBuilder CreateDefaultBuilder()
         {
+            var gpioController = GpioController.GetDefault();
+            var backlight = gpioController.OpenPin(FEZBit.GpioPin.Backlight);
+            backlight.Write(GpioPinValue.Low);
+
             var host = Host.CreateBuilder()
                 .ConfigureServices((context, services) =>
                 {
                     context.Configuration[BoardSettings.BoardType] = typeof(FEZBit);
-                    //context.Configuration[BoardSettings.NetworkConnected] = false;
 
                     services.AddClock(
                         (int)context.Configuration.GetValueOrDefault(BoardSettings.TimeZoneOffset, 0)

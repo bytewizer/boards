@@ -37,7 +37,7 @@ namespace Bytewizer.TinyCLR.Boards
             _logger = loggerFactory.CreateLogger(nameof(NetworkTimeService));
 
             Time = TimeSpan.Zero;
-            Interval = TimeSpan.FromMinutes(1);
+            Interval = TimeSpan.FromDays(1);
         }
 
         protected override void LinkConnected(NetworkController sender, NetworkAddressChangedEventArgs args)
@@ -86,7 +86,6 @@ namespace Bytewizer.TinyCLR.Boards
                 _logger.Log(LogLevel.Error, $"Failed getting network time from '{ntpServer}'.");
             }
         }
-
 
         private static DateTime GetNetworkTime(string ntpServer)
         {

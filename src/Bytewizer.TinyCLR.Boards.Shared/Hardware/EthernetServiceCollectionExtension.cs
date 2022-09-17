@@ -173,7 +173,6 @@ namespace Bytewizer.TinyCLR.Boards
             }
             else
             {
-                //_configuration[BoardSettings.NetworkConnected] = false;
                 _logger.Log(LogLevel.Information, "Ethernet interface disconnected.");
             }
         }
@@ -190,11 +189,6 @@ namespace Bytewizer.TinyCLR.Boards
 
                 var settings = NetworkHelper.GetNetworkSettings(sender);
                 _logger.Log(LogLevel.Information, settings);
-            }
-
-            if (address[0] != 0)
-            {
-                //_configuration[BoardSettings.NetworkConnected] = true;
             }
         }
     }
