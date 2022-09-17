@@ -40,7 +40,7 @@ namespace Bytewizer.TinyCLR.Boards
             Interval = TimeSpan.FromDays(1);
         }
 
-        protected override void LinkConnected(NetworkController sender, NetworkLinkConnectedChangedEventArgs args)
+        protected override void LinkConnected(NetworkController sender, NetworkAddressChangedEventArgs args)
         {
             SetTime();
 
@@ -50,7 +50,7 @@ namespace Bytewizer.TinyCLR.Boards
             }, null, Time, Interval);
         }
 
-        protected override void LinkDisconnected(NetworkController sender, NetworkLinkConnectedChangedEventArgs args)
+        protected override void LinkDisconnected(NetworkController sender, NetworkAddressChangedEventArgs args)
         {
             if (_executeTimer == null)
             {

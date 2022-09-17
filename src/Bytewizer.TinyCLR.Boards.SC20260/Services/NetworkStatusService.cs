@@ -35,7 +35,7 @@ namespace Bytewizer.TinyCLR.Boards
             }
         }
 
-        protected override void LinkConnected(NetworkController sender, NetworkLinkConnectedChangedEventArgs args)
+        protected override void LinkConnected(NetworkController sender, NetworkAddressChangedEventArgs args)
         {
             _led.Write(GpioPinValue.Low);
 
@@ -54,7 +54,7 @@ namespace Bytewizer.TinyCLR.Boards
             }
         }
 
-        protected override void LinkDisconnected(NetworkController sender, NetworkLinkConnectedChangedEventArgs args)
+        protected override void LinkDisconnected(NetworkController sender, NetworkAddressChangedEventArgs args)
         {
             _executeTimer = new Timer(state =>
             {

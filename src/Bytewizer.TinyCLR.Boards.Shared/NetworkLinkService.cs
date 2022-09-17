@@ -9,18 +9,13 @@ using GHIElectronics.TinyCLR.Devices.Network;
 
 namespace Bytewizer.TinyCLR.Hosting
 {
-    /// <summary>
-    /// Base class for implementing a network connected <see cref="IHostedService"/>.
-    /// </summary>
+
     public abstract class NetworkLinkService : IHostedService
     {
         private readonly IServiceProvider _services;
 
         private object[] _networkServices;
 
-        /// <summary>
-        /// Gets or sets the amount of time to wait after the <see cref="NetworkLinkConnectedChanged"/> fires.
-        /// </summary>
         protected int LinkDelay { get; set; } = 100;
 
         public NetworkLinkService(IServiceProvider services)
@@ -28,7 +23,6 @@ namespace Bytewizer.TinyCLR.Hosting
             _services = services;
         }
 
-        /// <inheritdoc />
         public virtual void Start()
         {
             _networkServices = _services.GetServices(typeof(INetworkService));
@@ -40,7 +34,7 @@ namespace Bytewizer.TinyCLR.Hosting
                 try
                 {
                     var controller = ((INetworkService)_networkServices[index]).Controller;
-                    controller.NetworkLinkConnectedChanged += NetworkLinkConnectedChanged;
+                    controller.NetworkAddressChanged += NetworkAddressChanged;
                 }
                 catch (Exception ex)
                 {
@@ -55,14 +49,14 @@ namespace Bytewizer.TinyCLR.Hosting
             }
         }
 
-        private void NetworkLinkConnectedChanged(NetworkController sender, NetworkLinkConnectedChangedEventArgs args)
+        private void NetworkAddressChanged(NetworkController sender, NetworkAddressChangedEventArgs args)
         {
             Thread.Sleep(LinkDelay);
 
             var ipProperties = sender.GetIPProperties();
             var address = ipProperties.Address.GetAddressBytes();
 
-            if (address[0] != 0)
+            if (sender.GetLinkConnected() && address[0] != 0)
             {
                 LinkConnected(sender, args);
             }
@@ -72,7 +66,6 @@ namespace Bytewizer.TinyCLR.Hosting
             }
         }
 
-        /// <inheritdoc />
         public virtual void Stop()
         {
             ArrayList exceptions = null;
@@ -82,7 +75,7 @@ namespace Bytewizer.TinyCLR.Hosting
                 try
                 {
                     var controller = ((INetworkService)_networkServices[index]).Controller;
-                    controller.NetworkLinkConnectedChanged -= NetworkLinkConnectedChanged;
+                    controller.NetworkAddressChanged -= NetworkAddressChanged;
                 }
                 catch (Exception ex)
                 {
@@ -97,8 +90,8 @@ namespace Bytewizer.TinyCLR.Hosting
             }
         }
 
-        protected abstract void LinkConnected(NetworkController sender, NetworkLinkConnectedChangedEventArgs args);
+        protected abstract void LinkConnected(NetworkController sender, NetworkAddressChangedEventArgs args);
         
-        protected abstract void LinkDisconnected(NetworkController sender, NetworkLinkConnectedChangedEventArgs args);
+        protected abstract void LinkDisconnected(NetworkController sender, NetworkAddressChangedEventArgs args);
     }
 }
