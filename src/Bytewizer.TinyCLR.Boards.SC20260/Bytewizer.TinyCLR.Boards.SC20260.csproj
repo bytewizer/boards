@@ -108,28 +108,28 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Bytewizer.TinyCLR.Core">
-      <Version>2.1.14</Version>
+      <Version>2.1.15</Version>
     </PackageReference>
     <PackageReference Include="Bytewizer.TinyCLR.DependencyInjection">
-      <Version>2.1.14</Version>
+      <Version>2.1.15</Version>
     </PackageReference>
     <PackageReference Include="Bytewizer.TinyCLR.DependencyInjection.Abstractions">
-      <Version>2.1.14</Version>
+      <Version>2.1.15</Version>
     </PackageReference>
     <PackageReference Include="Bytewizer.TinyCLR.Hosting">
-      <Version>2.1.14</Version>
+      <Version>2.1.15</Version>
     </PackageReference>
     <PackageReference Include="Bytewizer.TinyCLR.Hosting.Configuration">
-      <Version>2.1.14</Version>
+      <Version>2.1.15</Version>
     </PackageReference>
     <PackageReference Include="Bytewizer.TinyCLR.Logging">
-      <Version>2.1.14</Version>
+      <Version>2.1.15</Version>
     </PackageReference>
     <PackageReference Include="Bytewizer.TinyCLR.Logging.Abstractions">
-      <Version>2.1.14</Version>
+      <Version>2.1.15</Version>
     </PackageReference>
     <PackageReference Include="Bytewizer.TinyCLR.Logging.Debug">
-      <Version>2.1.14</Version>
+      <Version>2.1.15</Version>
     </PackageReference>
     <PackageReference Include="GHIElectronics.TinyCLR.Core">
       <Version>2.2.0.5000</Version>
