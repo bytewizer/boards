@@ -36,7 +36,7 @@ namespace Bytewizer.TinyCLR.Boards
 
     public class ClockService : IClockService
     {
-        private readonly int _timeZoneOffset;
+        private int _timeZoneOffset;
 
         public RtcController Controller { get; private set; }
         
@@ -44,9 +44,9 @@ namespace Bytewizer.TinyCLR.Boards
         
         public DateTime Now { get => Controller.Now.AddSeconds(_timeZoneOffset); }
 
-        public ClockService(int timezoneOffset)
+        public ClockService(int offsetSeconds)
         {
-            _timeZoneOffset = timezoneOffset;
+            _timeZoneOffset = offsetSeconds;
 
             Controller = RtcController.GetDefault();
             Controller.SetChargeMode(BatteryChargeMode.Fast);
@@ -56,7 +56,12 @@ namespace Bytewizer.TinyCLR.Boards
                 SystemTime.SetTime(Now);
             }
         }
-        
+
+        public void SetTimeZone(int offsetSeconds)
+        {
+            _timeZoneOffset = offsetSeconds;
+        }
+
         public void SetTime(DateTime value)
         {
             Controller.SetTime(RtcDateTime.FromDateTime(value));

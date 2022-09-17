@@ -56,13 +56,13 @@ namespace Bytewizer.TinyCLR.Hosting
             var ipProperties = sender.GetIPProperties();
             var address = ipProperties.Address.GetAddressBytes();
 
-            if (sender.GetLinkConnected() && address[0] != 0)
+            if (sender.GetLinkConnected() && address.Length > 0 && address[0] != 0)
             {
-                LinkConnected(sender, args);
+                Connected(sender, args);
             }
             else
             {
-                LinkDisconnected(sender, args);
+                Disconnected(sender, args);
             }
         }
 
@@ -90,8 +90,8 @@ namespace Bytewizer.TinyCLR.Hosting
             }
         }
 
-        protected abstract void LinkConnected(NetworkController sender, NetworkAddressChangedEventArgs args);
+        protected abstract void Connected(NetworkController sender, NetworkAddressChangedEventArgs args);
         
-        protected abstract void LinkDisconnected(NetworkController sender, NetworkAddressChangedEventArgs args);
+        protected abstract void Disconnected(NetworkController sender, NetworkAddressChangedEventArgs args);
     }
 }

@@ -26,16 +26,9 @@ namespace Bytewizer.TinyCLR.Boards
 
             Time = TimeSpan.Zero;
             Interval = TimeSpan.FromSeconds(2);
-
-            var networkServices = services.GetService(new Type[] { typeof(INetworkService) });
-
-            foreach (INetworkService service in networkServices)
-            {
-                service.Enable();
-            }
         }
 
-        protected override void LinkConnected(NetworkController sender, NetworkAddressChangedEventArgs args)
+        protected override void Connected(NetworkController sender, NetworkAddressChangedEventArgs args)
         {
             _led.Write(GpioPinValue.Low);
 
@@ -54,7 +47,7 @@ namespace Bytewizer.TinyCLR.Boards
             }
         }
 
-        protected override void LinkDisconnected(NetworkController sender, NetworkAddressChangedEventArgs args)
+        protected override void Disconnected(NetworkController sender, NetworkAddressChangedEventArgs args)
         {
             _executeTimer = new Timer(state =>
             {
