@@ -62,7 +62,7 @@ namespace Bytewizer.TinyCLR.Hosting
             var ipProperties = sender.GetIPProperties();
             var address = ipProperties.Address.GetAddressBytes();
 
-            if (args.Connected == true && address[0] != 0)
+            if (address[0] != 0)
             {
                 LinkConnected(sender, args);
             }
