@@ -55,25 +55,5 @@ namespace Bytewizer.TinyCLR.Boards
 
             return sb.ToString();
         }
-
-        //private static string GetPhysicalAddress(byte[] bytes, char seperator = '-')
-        //{
-        //    if (bytes == null)
-        //    {
-        //        return null;
-        //    }
-
-        //    string physicalAddress = string.Empty;
-
-        //    for (int i = 0; i < bytes.Length; i++)
-        //    {
-        //        physicalAddress += bytes[i].ToString("X2");
-
-        //        if (i != bytes.Length - 1)
-        //            physicalAddress += seperator;
-        //    }
-
-        //    return physicalAddress;
-        //}
     }
 }

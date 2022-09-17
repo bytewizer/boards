@@ -63,9 +63,6 @@
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\Hardware\DisplayServiceCollectionExtension.cs">
       <Link>Hardware\Shared\DisplayServiceCollectionExtension.cs</Link>
     </Compile>
-    <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\Hardware\NetworkTimeServiceCollectionExtension.cs">
-      <Link>Hardware\Shared\NetworkTimeServiceCollectionExtension.cs</Link>
-    </Compile>
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\Hardware\WirelessServiceCollectionExtension.cs">
       <Link>Hardware\Shared\WirelessServiceCollectionExtension.cs</Link>
     </Compile>
@@ -78,8 +75,14 @@
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\NetworkHelper.cs">
       <Link>Hardware\Shared\NetworkHelper.cs</Link>
     </Compile>
+    <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\NetworkLinkService.cs">
+      <Link>Hardware\Shared\NetworkLinkService.cs</Link>
+    </Compile>
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\NetworkSettings.cs">
       <Link>Hardware\Shared\NetworkSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\NetworkTimeService.cs">
+      <Link>Hardware\Shared\NetworkTimeService.cs</Link>
     </Compile>
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\WirelessSettings.cs">
       <Link>Hardware\Shared\WirelessSettings.cs</Link>

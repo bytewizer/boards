@@ -54,6 +54,8 @@ namespace Bytewizer.TinyCLR.Boards
                     ServiceLifetime.Singleton
                 ));
 
+            services.AddHostedService(typeof(NetworkTimeService));
+
             return services;
         }
     }

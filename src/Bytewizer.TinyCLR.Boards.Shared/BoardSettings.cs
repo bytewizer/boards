@@ -11,5 +11,6 @@
         public static readonly string TimeZoneOffset = "timezone:offset";
         public static readonly string MinimumLogLevel = "logging:log-level";
         public static readonly string NetworkTimeServer = "ntp:server";
+        public static readonly string NetworkTimeEnabled = "ntp:ntp-enabled";
     }
 }

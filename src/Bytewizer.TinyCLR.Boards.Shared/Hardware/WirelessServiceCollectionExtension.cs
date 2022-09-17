@@ -55,7 +55,8 @@ namespace Bytewizer.TinyCLR.Boards
                 );
 
             services.AddHostedService(typeof(WirelessWatchdog));
-            
+            services.AddHostedService(typeof(NetworkTimeService));
+
             return services;
         }
     }

@@ -1,4 +1,6 @@
-﻿using Bytewizer.TinyCLR.Hosting;
+﻿using System;
+
+using Bytewizer.TinyCLR.Hosting;
 using Bytewizer.TinyCLR.DependencyInjection;
 
 using GHIElectronics.TinyCLR.Pins;
@@ -12,6 +14,16 @@ namespace Bytewizer.TinyCLR.Boards
     {
         public static IServiceCollection AddDisplay(this IServiceCollection services)
         {
+            return AddDisplay(services, true, true, false, false);
+        }
+
+        public static IServiceCollection AddDisplay(this IServiceCollection services, bool swapRowColumn, bool invertRow, bool invertColumn, bool useBgrPanel)
+        {
+            if (services == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             var spiController = SpiController.FromName(SC20100.SpiBus.Spi3);
             var gpioController = GpioController.GetDefault();
 
@@ -26,28 +38,9 @@ namespace Bytewizer.TinyCLR.Boards
                 gpioController.OpenPin(SC20100.GpioPin.PE15) 
             );
 
-            controller.SetDataAccessControl(true, true, false, false); 
-            
-            var settings = new DisplaySettings()
-            {
-                Controller = controller,
-                BacklightPin = SC20100.GpioPin.PE5 // this has a conflict with mikrobus slot1
-            };
+            controller.SetDataAccessControl(swapRowColumn, invertRow, invertColumn, useBgrPanel);
 
-            services.Replace(
-                new ServiceDescriptor(
-                    typeof(DisplaySettings),
-                    settings
-                ));
-
-            services.TryAdd(
-                new ServiceDescriptor(
-                    typeof(IDisplayService),
-                    typeof(DisplayService),
-                    ServiceLifetime.Singleton
-                ));
-
-            return services;
+            return services.AddDisplay(controller, SC20100.GpioPin.PE5); // this has a conflict with mikrobus slot1
         }
     }
 }

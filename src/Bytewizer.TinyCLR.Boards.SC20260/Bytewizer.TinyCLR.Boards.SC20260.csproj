@@ -63,9 +63,6 @@
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\Hardware\EthernetServiceCollectionExtension.cs">
       <Link>Hardware\Shared\EthernetServiceCollectionExtension.cs</Link>
     </Compile>
-    <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\Hardware\NetworkTimeServiceCollectionExtension.cs">
-      <Link>Hardware\Shared\NetworkTimeServiceCollectionExtension.cs</Link>
-    </Compile>
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\Hardware\TouchScreenServiceCollectionExtension.cs">
       <Link>Hardware\Shared\TouchScreenServiceCollectionExtension.cs</Link>
     </Compile>
@@ -87,8 +84,14 @@
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\NetworkHelper.cs">
       <Link>Hardware\Shared\NetworkHelper.cs</Link>
     </Compile>
+    <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\NetworkLinkService.cs">
+      <Link>Hardware\Shared\NetworkLinkService.cs</Link>
+    </Compile>
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\NetworkSettings.cs">
       <Link>Hardware\Shared\NetworkSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\NetworkTimeService.cs">
+      <Link>Hardware\Shared\NetworkTimeService.cs</Link>
     </Compile>
     <Compile Include="..\Bytewizer.TinyCLR.Boards.Shared\TouchScreenSettings.cs">
       <Link>Hardware\Shared\TouchScreenSettings.cs</Link>

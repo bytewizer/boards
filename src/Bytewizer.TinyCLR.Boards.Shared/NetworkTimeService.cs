@@ -13,18 +13,21 @@ namespace Bytewizer.TinyCLR.Boards
         private Timer _executeTimer;
         
         private readonly ILogger _logger;
-        private readonly IConfiguration _configuration;
         private readonly IClockService _clock;
+        private readonly IConfiguration _configuration;
 
-        /// <summary>
-        /// Gets the due time of the timer. 
-        /// </summary>
-        protected TimeSpan Time { get; private set; }
+        public TimeSpan Time { get; set; }
+        public TimeSpan Interval { get; set; }
 
-        /// <summary>
-        /// Gets the interval of the timer.
-        /// </summary>
-        protected TimeSpan Interval { get; private set; }
+        public override void Start()
+        {
+            var enabled = (bool)_configuration.GetValueOrDefault(BoardSettings.NetworkTimeEnabled, true);
+
+            if (enabled)
+            {
+                base.Start();
+            }
+        }
 
         public NetworkTimeService(IServiceProvider services, IClockService clock, IConfiguration configuration, ILoggerFactory loggerFactory)
             : base(services)
@@ -40,6 +43,7 @@ namespace Bytewizer.TinyCLR.Boards
         protected override void LinkConnected(NetworkController sender, NetworkLinkConnectedChangedEventArgs args)
         {
             SetTime();
+
             _executeTimer = new Timer(state =>
             {
                 SetTime();
@@ -63,7 +67,6 @@ namespace Bytewizer.TinyCLR.Boards
             }
         }
 
-        /// <inheritdoc />
         public virtual void Dispose()
         {
             _executeTimer?.Dispose();
