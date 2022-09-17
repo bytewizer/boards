@@ -210,7 +210,7 @@ namespace Bytewizer.TinyCLR.Boards
             }
             else
             {
-                _configuration[BoardSettings.NetworkConnected] = false;
+                //_configuration[BoardSettings.NetworkConnected] = false;
                 _logger.Log(LogLevel.Information, "802.11 wireless interface disconnected.");
             }
         }
@@ -231,7 +231,7 @@ namespace Bytewizer.TinyCLR.Boards
 
             if (address[0] != 0)
             {
-                _configuration[BoardSettings.NetworkConnected] = true;
+                //_configuration[BoardSettings.NetworkConnected] = true;
             }
         }
     }

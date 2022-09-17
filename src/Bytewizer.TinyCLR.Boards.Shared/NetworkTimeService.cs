@@ -11,7 +11,7 @@ namespace Bytewizer.TinyCLR.Boards
     public class NetworkTimeService : NetworkLinkService, IDisposable
     {
         private Timer _executeTimer;
-        
+
         private readonly ILogger _logger;
         private readonly IClockService _clock;
         private readonly IConfiguration _configuration;
@@ -74,25 +74,21 @@ namespace Bytewizer.TinyCLR.Boards
 
         private void SetTime()
         {
-            var connected = (bool)_configuration[BoardSettings.NetworkConnected];
+            var ntpServer = (string)_configuration.GetValueOrDefault(BoardSettings.NetworkTimeServer, "pool.ntp.org");
 
-            if (connected)
+            try
             {
-                var ntpServer = (string)_configuration.GetValueOrDefault(BoardSettings.NetworkTimeServer, "pool.ntp.org");
+                var accurateTime = GetNetworkTime(ntpServer);
 
-                try
-                {
-                    var accurateTime = GetNetworkTime(ntpServer);
-
-                    _clock.SetTime(accurateTime);
-                    _logger.Log(LogLevel.Information, $"Realtime clock set to {_clock.Now:MM/dd/yyyy hh:mm:ss tt} UTC from '{ntpServer}'.");
-                }
-                catch
-                {
-                    _logger.Log(LogLevel.Error, $"Failed getting network time from '{ntpServer}'.");
-                }
+                _clock.SetTime(accurateTime);
+                _logger.Log(LogLevel.Information, $"Realtime clock set to {_clock.Now:MM/dd/yyyy hh:mm:ss tt} UTC from '{ntpServer}'.");
+            }
+            catch
+            {
+                _logger.Log(LogLevel.Error, $"Failed getting network time from '{ntpServer}'.");
             }
         }
+
 
         private static DateTime GetNetworkTime(string ntpServer)
         {

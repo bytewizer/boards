@@ -15,7 +15,7 @@ namespace Bytewizer.TinyCLR.Boards
                 .ConfigureServices((context, services) =>
                 {
                     context.Configuration[BoardSettings.BoardType] = typeof(FEZDuino);
-                    context.Configuration[BoardSettings.NetworkConnected] = false;
+                    //context.Configuration[BoardSettings.NetworkConnected] = false;
 
                     services.AddClock(
                         (int)context.Configuration.GetValueOrDefault(BoardSettings.TimeZoneOffset, 0)

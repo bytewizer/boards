@@ -5,7 +5,7 @@
         // internal use only
         public static readonly string BoardType = "_board:type_";
         public static readonly string ControllerDefault = "_controller:default_";
-        public static readonly string NetworkConnected = "_network:connected_";
+        //public static readonly string NetworkConnected = "_network:connected_";
 
         // public configuration settings
         public static readonly string TimeZoneOffset = "timezone:offset";
